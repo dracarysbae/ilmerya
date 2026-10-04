@@ -1,0 +1,97 @@
+name: Android tests and emulator walkthrough
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['shared/**', 'androidApp/**', 'server/**', 'gradle/**', '*.kts', '.github/workflows/android-ci.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  unit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Shared rules, persistence, league client and audio tests
+        run: ./gradlew :shared:testDebugUnitTest --console=plain
+      - name: League server tests (HTTP, replay, Game Center, PostgreSQL rules)
+        run: ./gradlew -p server test --console=plain
+      - name: Debug and release-path (R8, test ads) builds
+        run: ./gradlew :androidApp:assembleDebug :androidApp:assembleQa :androidApp:assembleDebugAndroidTest --console=plain
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unit-test-reports
+          retention-days: 3
+          path: |
+            shared/build/test-results/
+            server/build/test-results/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-apks
+          retention-days: 3
+          path: androidApp/build/outputs/apk/
+
+  emulator:
+    needs: unit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - api: 35
+            profile: pixel_7
+          - api: 30
+            profile: Nexus 5X
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+      - name: Instrumented walkthrough on an emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api }}
+          target: google_apis
+          arch: x86_64
+          profile: ${{ matrix.profile }}
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: |
+            ./gradlew :androidApp:connectedDebugAndroidTest --console=plain
+            adb pull /sdcard/Pictures/ilmerya-qa build/qa-shots || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: emulator-api${{ matrix.api }}
+          retention-days: 5
+          path: |
+            androidApp/build/reports/androidTests/
+            build/qa-shots/
