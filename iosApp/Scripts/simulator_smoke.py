@@ -21,7 +21,9 @@ for attempt in range(2):
     time.sleep(25)
     shot = out / f"launch-{attempt + 1}.png"
     subprocess.check_call(["xcrun", "simctl", "io", udid, "screenshot", str(shot)])
-    alive = subprocess.run(["xcrun", "simctl", "spawn", udid, "kill", "-0", pid]).returncode == 0
+    # The simulator has no kill(1); launchd lists running UIKit apps by bundle identifier.
+    services = subprocess.run(["xcrun", "simctl", "spawn", udid, "launchctl", "list"], capture_output=True, text=True).stdout
+    alive = any(bundle in line and line.split()[0].isdigit() for line in services.splitlines())
     result["launches"].append({"pid": pid, "alive_after_25s": alive, "screenshot": shot.name})
     subprocess.run(["xcrun", "simctl", "terminate", udid, bundle], check=False)
     time.sleep(2)
