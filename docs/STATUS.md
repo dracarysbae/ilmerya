@@ -12,7 +12,7 @@ Durumlar ayrı tutulur: kod yazıldı / derlendi / otomatik test edildi / emüla
 | Android arayüz akışı | `ExperienceTest` API 36 emülatörde geçti (rehber, yerleştirme, geri ile duraklatma, menüden devam, lig ekranı, geri) |
 | Süreç ölümünden sonra geri yükleme | Emülatörde `force-stop` sonrası "Kaldığın yerden devam et" göründü |
 | Zincir animasyonu | Emülatör ekran kaydında 4 dalgalı zincir ve etiketler görüldü; ilk kare sıçraması düzeltildi |
-| iOS | Xcode 26 / iOS 26.2 simülatöründe derlendi, kuruldu ve ana menü doğru çizildi (CI artifact) |
+| iOS | GitHub Actions run 37234212393: Xcode 26 / iOS 26.2 simülatöründe derlendi, kuruldu, iki açılışta 25 sn sonra çalışıyordu, çökme raporu yok; imzasız Release cihaz derlemesi (üretim reklam kimliği doğrulamasıyla) geçti. Oynanış, reklam, Game Center ve ses henüz iOS'ta test edilmedi |
 | Mağaza kayıtları | Play Console: İlmerya `com.ozgames.ilmerya` oluşturuldu (taslak). Google Cloud: `ilmerya` projesi. Neon: `ilmerya-league` (Frankfurt, Free) |
 
 ## Henüz doğrulanmayanlar / eksikler
