@@ -1,0 +1,57 @@
+name: iOS simulator validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['shared/**', 'iosApp/**', 'gradle/**', '*.kts', '.github/workflows/ios-simulator.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-simulator-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  simulator:
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.0.1.app/Contents/Developer
+      HOMEBREW_NO_AUTO_UPDATE: '1'
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Tools
+        run: |
+          test "$(uname -m)" = arm64
+          xcodebuild -version
+          if ! command -v xcodegen >/dev/null; then brew install xcodegen; fi
+      - name: Shared rules, league client and persistence tests
+        run: ./gradlew :shared:testDebugUnitTest --console=plain
+      - name: Generate project and build for the simulator
+        run: |
+          cd iosApp && xcodegen generate && cd ..
+          xcodebuild -project iosApp/Ilmerya.xcodeproj -scheme Ilmerya -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/ios ARCHS=arm64 CODE_SIGNING_ALLOWED=NO build | tail -n 80
+      - name: Launch on an iPhone simulator and capture screens
+        run: python3 iosApp/Scripts/simulator_smoke.py build/ios build/ios-smoke
+      - name: Unsigned Release device build (archive gate)
+        run: |
+          xcodebuild -project iosApp/Ilmerya.xcodeproj -scheme Ilmerya -configuration Release \
+            -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build/ios-release \
+            CODE_SIGNING_ALLOWED=NO build | tail -n 40
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-simulator-validation
+          retention-days: 3
+          path: build/ios-smoke/

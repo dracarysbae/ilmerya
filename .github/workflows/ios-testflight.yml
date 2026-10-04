@@ -1,0 +1,62 @@
+name: iOS signed build and TestFlight upload
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_number:
+        description: Unique Apple build number
+        required: true
+        type: string
+      upload:
+        description: Upload to App Store Connect (never submits App Review)
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-testflight
+  cancel-in-progress: false
+
+jobs:
+  distribution:
+    runs-on: macos-15
+    timeout-minutes: 50
+    environment: apple-distribution
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.0.1.app/Contents/Developer
+      HOMEBREW_NO_AUTO_UPDATE: '1'
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
+      APPLE_TEAM_ID: 2NACCHBN47
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Tools and tests
+        run: |
+          xcodebuild -version
+          if ! command -v xcodegen >/dev/null; then brew install xcodegen; fi
+          ./gradlew :shared:testDebugUnitTest --console=plain
+      - name: Sign, archive, export and optionally upload
+        env:
+          BUILD_NUMBER: ${{ inputs.build_number }}
+          UPLOAD: ${{ inputs.upload }}
+          APPLE_DISTRIBUTION_P12_B64: ${{ secrets.APPLE_DISTRIBUTION_P12_B64 }}
+          APPLE_DISTRIBUTION_P12_PASSWORD: ${{ secrets.APPLE_DISTRIBUTION_P12_PASSWORD }}
+          APPLE_PROFILE_B64: ${{ secrets.ILMERYA_APPSTORE_PROFILE_B64 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_PRIVATE_KEY_B64: ${{ secrets.ASC_PRIVATE_KEY_B64 }}
+          ILMERYA_API_URL: ${{ vars.ILMERYA_API_URL }}
+        run: bash iosApp/Scripts/ci_distribution.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ilmerya-signed-ipa
+          retention-days: 1
+          if-no-files-found: error
+          path: build/export/*.ipa
