@@ -13,7 +13,7 @@ import kotlin.test.*
 
 /** Local synthetic RSA/PKIX fixture; the signing key here has no production authority. */
 internal object GameCenterFixture {
-    const val bundle = "com.bloxtrix.hexdrop"
+    const val bundle = "com.ozgames.ilmerya"
     const val url = "https://static.gc.apple.com/public-key/gc-prod-99.cer"
     fun resource(name: String) = checkNotNull(javaClass.getResourceAsStream("/game-center/$name")).use { it.readBytes() }
     fun cert(name: String) = CertificateFactory.getInstance("X.509").generateCertificate(resource(name).inputStream()) as X509Certificate

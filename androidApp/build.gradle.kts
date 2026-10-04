@@ -39,7 +39,7 @@ android {
     namespace   = "com.bloxtrix.hexdrop"
     compileSdk  = 36
     defaultConfig {
-        applicationId = "com.bloxtrix.hexdrop"
+        applicationId = "com.ozgames.ilmerya"
         minSdk        = 26
         targetSdk     = 36
         versionCode   = 1

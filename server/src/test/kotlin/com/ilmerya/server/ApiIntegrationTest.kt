@@ -50,7 +50,7 @@ class ApiIntegrationTest {
         assertEquals(403, post("$base/v1/guest", JSONObject()).statusCode())
         assertEquals(503, post("$base/v1/auth/play-games", JSONObject().put("code", "x".repeat(20))).statusCode())
         assertEquals(503, post("$base/v1/auth/game-center", JSONObject().put("teamPlayerID", "T:1")
-            .put("bundleID", "com.bloxtrix.hexdrop").put("timestamp", "1")).statusCode())
+            .put("bundleID", "com.ozgames.ilmerya").put("timestamp", "1")).statusCode())
     }
 
     @Test fun rankedRunTravelsThroughHttpAndIsReplayedOnTheServer() = withServer(guests = true) { base ->

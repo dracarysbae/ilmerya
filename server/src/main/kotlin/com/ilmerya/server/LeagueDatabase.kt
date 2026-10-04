@@ -11,8 +11,16 @@ internal fun verifiedPostgresUrl(url: String): String {
     val properties = requireNotNull(org.postgresql.Driver.parseURL(url, null)) { "Invalid PostgreSQL URL" }
     val local = properties.getProperty("PGHOST").split(',').all { it == "localhost" || it == "127.0.0.1" }
     if (local) return url
-    require(properties.getProperty("sslmode") == "verify-full") {
+    val mode = properties.getProperty("sslmode")
+    // Provider strings often say "require" (encryption only). Upgrade it to full certificate and
+    // hostname verification; a mode that permits plaintext is refused outright.
+    require(mode in listOf(null, "require", "verify-ca", "verify-full")) {
         "Remote PostgreSQL requires certificate and hostname verification"
+    }
+    if (mode != "verify-full") {
+        val upgraded = if (mode == null) url + (if ('?' in url) "&" else "?") + "sslmode=verify-full"
+            else url.replace(Regex("([?&])sslmode=$mode(?=&|$)"), "$1sslmode=verify-full")
+        return verifiedPostgresUrl(upgraded)
     }
     val factory = "org.postgresql.ssl.DefaultJavaSSLFactory"
     require(properties.getProperty("sslfactory") in listOf(null, factory)) {

@@ -24,10 +24,22 @@ class LeagueDatabaseTest {
 
     @Test fun remoteDatabaseCannotDisableCertificateVerification() {
         for (url in listOf(
-            "jdbc:postgresql://db.example.invalid/league",
-            "jdbc:postgresql://db.example.invalid/league?sslmode=require",
-            "jdbc:postgresql://db.example.invalid/league?sslmode=disable"
+            "jdbc:postgresql://db.example.invalid/league?sslmode=disable",
+            "jdbc:postgresql://db.example.invalid/league?sslmode=allow",
+            "jdbc:postgresql://db.example.invalid/league?sslmode=prefer"
         )) assertFailsWith<IllegalArgumentException> { LeagueDatabase(":memory:", url) }
+    }
+
+    @Test fun encryptionOnlyProviderStringsAreUpgradedToFullVerification() {
+        for (url in listOf(
+            "jdbc:postgresql://ep-x.eu-central-1.aws.neon.tech/neondb?user=u&password=p&sslmode=require&channelBinding=require",
+            "jdbc:postgresql://ep-x.eu-central-1.aws.neon.tech/neondb?user=u&password=p",
+        )) {
+            val result = verifiedPostgresUrl(url)
+            assertTrue("sslmode=verify-full" in result, result)
+            assertFalse("sslmode=require" in result, result)
+            assertTrue(result.endsWith("sslfactory=org.postgresql.ssl.DefaultJavaSSLFactory"))
+        }
     }
 
     @Test fun transactionFailureRollsBackAndConnectionCanBeReused() {
