@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -35,6 +36,11 @@ val validateReleaseAds by tasks.registering {
 
 tasks.matching { it.name == "preReleaseBuild" }.configureEach { dependsOn(validateReleaseAds) }
 
+// Upload key lives outside the repository (default ~/.ilmerya-signing). Without it, release output is unsigned.
+val signingFile = file(providers.gradleProperty("ILMERYA_SIGNING_PROPERTIES")
+    .orElse(System.getProperty("user.home") + "/.ilmerya-signing/ilmerya-upload.properties").get())
+val uploadSigning = Properties().apply { if (signingFile.isFile) signingFile.inputStream().use { load(it) } }
+
 android {
     namespace   = "com.bloxtrix.hexdrop"
     compileSdk  = 36
@@ -61,6 +67,14 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures { buildConfig = true }
+    signingConfigs {
+        if (uploadSigning.getProperty("storeFile") != null) create("upload") {
+            storeFile = file(uploadSigning.getProperty("storeFile"))
+            storePassword = uploadSigning.getProperty("storePassword")
+            keyAlias = uploadSigning.getProperty("keyAlias")
+            keyPassword = uploadSigning.getProperty("keyPassword")
+        }
+    }
     buildTypes {
         debug {
             manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
@@ -70,6 +84,7 @@ android {
             manifestPlaceholders["admobAppId"] = productionAdmobAppId.get()
             val validatedId = productionInterstitialId.get().takeIf(unitIdPattern::matches).orEmpty()
             buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"$validatedId\"")
+            signingConfigs.findByName("upload")?.let { signingConfig = it }
             isMinifyEnabled   = true
             isShrinkResources = true
             proguardFiles(
