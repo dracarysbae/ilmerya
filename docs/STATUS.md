@@ -10,6 +10,7 @@ Durumlar ayrı tutulur: kod yazıldı / derlendi / otomatik test edildi / emüla
 | Sunucu | 34 test: Game Center imza doğrulaması, gerçek HTTP ile lig oyunu gönderme/tekrar/sıralama/hesap silme, PostgreSQL TLS kuralları |
 | Android debug / QA / imzalı release | Derlendi. QA (R8 + test reklamı) API 36 emülatörde açıldı, test geçiş reklamı yüklendi, çökme yok. Release AAB İlmerya yükleme anahtarıyla imzalı (SHA-1 `8D:5B:7D:17:E8:2A:58:09:0A:1A:AA:9C:6B:65:8B:5C:16:9E:75:1C`) |
 | Android arayüz akışı | `ExperienceTest` API 36 emülatörde geçti (rehber, yerleştirme, geri ile duraklatma, menüden devam, lig ekranı, geri) |
+| Android CI | GitHub Actions run 37236964802: birim + sunucu testleri, debug/QA (R8) derlemeleri, API 35 (Pixel 7) ve API 30 (Nexus 5X) emülatörlerinde iki arayüz testi (ilk açılış rehberi, oynanış, geri ile duraklatma, menüden devam, lig ekranı; etkinlik yeniden oluşturulduğunda tahta ve dil ayarı korunuyor) geçti |
 | Süreç ölümünden sonra geri yükleme | Emülatörde `force-stop` sonrası "Kaldığın yerden devam et" göründü |
 | Zincir animasyonu | Emülatör ekran kaydında 4 dalgalı zincir ve etiketler görüldü; ilk kare sıçraması düzeltildi |
 | iOS | GitHub Actions run 37234212393: Xcode 26 / iOS 26.2 simülatöründe derlendi, kuruldu, iki açılışta 25 sn sonra çalışıyordu, çökme raporu yok; imzasız Release cihaz derlemesi (üretim reklam kimliği doğrulamasıyla) geçti. Oynanış, reklam, Game Center ve ses henüz iOS'ta test edilmedi |
