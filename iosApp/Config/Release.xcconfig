@@ -1,0 +1,11 @@
+// ILMERYA iOS normal interstitial, created in AdMob on 2026-10-03.
+// The release validation build phase rejects empty values and Google test IDs.
+ADMOB_APP_ID = ca-app-pub-1875904677314834~6655058128
+ADMOB_INTERSTITIAL_ID = ca-app-pub-1875904677314834/2541476737
+
+// Weekly league HTTPS service; empty shows the league as off. xcconfig treats "//" as a comment,
+// so write the scheme as https:/$()/host (for example https:/$()/ilmerya-league.onrender.com).
+ILMERYA_API_URL =
+
+// Optional local overrides (signing team, league URL) are applied last.
+#include? "Production.xcconfig"

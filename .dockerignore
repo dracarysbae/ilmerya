@@ -1,0 +1,10 @@
+**/build
+**/.gradle
+.git
+.design-backup
+artifacts
+design-review
+local.properties
+**/*.jks
+**/*.keystore
+**/.env

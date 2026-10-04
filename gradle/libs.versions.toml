@@ -1,0 +1,30 @@
+[versions]
+kotlin               = "2.3.10"
+compose-multiplatform = "1.10.0"
+agp                  = "8.13.2"
+coroutines           = "1.10.2"
+lifecycle            = "2.9.6"
+activity-compose     = "1.10.1"
+appcompat            = "1.7.0"
+play-services-ads    = "25.4.0"
+user-messaging-platform = "4.0.0"
+play-games           = "22.0.0"
+serialization-json   = "1.9.0"
+
+[libraries]
+kotlinx-coroutines-core              = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core",    version.ref = "coroutines" }
+kotlinx-coroutines-test              = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test",    version.ref = "coroutines" }
+kotlinx-serialization-json           = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization-json" }
+androidx-activity-compose            = { module = "androidx.activity:activity-compose",               version.ref = "activity-compose" }
+androidx-appcompat                   = { module = "androidx.appcompat:appcompat",                     version.ref = "appcompat" }
+play-services-ads                    = { module = "com.google.android.gms:play-services-ads",         version.ref = "play-services-ads" }
+user-messaging-platform              = { module = "com.google.android.ump:user-messaging-platform", version.ref = "user-messaging-platform" }
+play-games                           = { module = "com.google.android.gms:play-services-games-v2",    version.ref = "play-games" }
+
+[plugins]
+android-application   = { id = "com.android.application",             version.ref = "agp" }
+android-library       = { id = "com.android.library",                 version.ref = "agp" }
+kotlin-multiplatform  = { id = "org.jetbrains.kotlin.multiplatform",  version.ref = "kotlin" }
+kotlin-android        = { id = "org.jetbrains.kotlin.android",        version.ref = "kotlin" }
+compose-multiplatform = { id = "org.jetbrains.compose",              version.ref = "compose-multiplatform" }
+compose-compiler      = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

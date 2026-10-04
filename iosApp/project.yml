@@ -1,0 +1,66 @@
+name: Ilmerya
+options:
+  minimumXcodeGenVersion: 2.42.0
+  deploymentTarget:
+    iOS: '15.0'
+configs:
+  Debug: debug
+  Release: release
+packages:
+  GoogleMobileAds:
+    url: https://github.com/googleads/swift-package-manager-google-mobile-ads.git
+    exactVersion: 13.10.0
+  GoogleUserMessagingPlatform:
+    url: https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git
+    exactVersion: 3.1.0
+targets:
+  Ilmerya:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: Resources
+    configFiles:
+      Debug: Config/Debug.xcconfig
+      Release: Config/Release.xcconfig
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bloxtrix.hexdrop
+        PRODUCT_NAME: Ilmerya
+        MARKETING_VERSION: 1.0.0
+        CURRENT_PROJECT_VERSION: 1
+        INFOPLIST_FILE: Info.plist
+        CODE_SIGN_ENTITLEMENTS: Ilmerya.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_VERSION: 5.0
+        TARGETED_DEVICE_FAMILY: '1'
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+        GENERATE_INFOPLIST_FILE: NO
+        FRAMEWORK_SEARCH_PATHS: '$(inherited) $(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)'
+        OTHER_LDFLAGS: '$(inherited) -framework Shared -ObjC'
+        LD_RUNPATH_SEARCH_PATHS: '$(inherited) @executable_path/Frameworks'
+      configs:
+        Debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: '$(inherited) DEBUG'
+    dependencies:
+      - package: GoogleMobileAds
+      - package: GoogleUserMessagingPlatform
+    preBuildScripts:
+      - name: Validate advertising configuration
+        script: 'sh "$SRCROOT/Scripts/validate-ads.sh"'
+        basedOnDependencyAnalysis: false
+      - name: Build shared Kotlin framework
+        script: |
+          set -eu
+          cd "$SRCROOT/.."
+          sh ./gradlew :shared:embedAndSignAppleFrameworkForXcode
+        basedOnDependencyAnalysis: false
+schemes:
+  Ilmerya:
+    build:
+      targets:
+        Ilmerya: all
+    run:
+      config: Debug
+    archive:
+      config: Release

@@ -1,0 +1,10 @@
+mix,bot,seeds,p10_drops,median_drops,p90_drops,survival100_pct,survival200_pct,cap_pct,mean_fill_first40_pct,median_score,mean_actions
+Baseline,Random,32,285,400.0,400,100.0,96.8,68.7,27.3,16238.0,369.625
+Baseline,RoundRobin,32,228,400.0,400,100.0,93.7,62.5,24.1,16684.0,357.09375
+Baseline,Greedy,32,400,400.0,400,100.0,100.0,100.0,15.5,13452.0,417.9375
+Progressive,Random,32,102,146.0,168,93.7,3.1,0.0,27.9,5216.0,147.375
+Progressive,RoundRobin,32,83,128.5,171,78.1,0.0,0.0,26.8,4636.0,133.03125
+Progressive,Greedy,32,329,400.0,400,100.0,100.0,84.3,16.2,31604.0,427.21875
+EarlyPressure,Random,32,65,90.0,122,34.3,0.0,0.0,37.1,4000.0,93.90625
+EarlyPressure,RoundRobin,32,69,81.0,110,21.8,0.0,0.0,33.2,2976.0,89.0625
+EarlyPressure,Greedy,32,174,300.5,400,100.0,78.1,12.5,19.3,28710.0,316.3125

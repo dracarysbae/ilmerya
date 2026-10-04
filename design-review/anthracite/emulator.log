@@ -1,0 +1,156 @@
+INFO         | Android emulator version 36.2.12.0 (build_id 14214601) (CL:N/A)
+INFO         | Graphics backend: gfxstream
+INFO         | Found systemPath C:\Users\ahmet\AppData\Local\Android\Sdk\system-images\android-36.1\google_apis_playstore\x86_64\
+WARNING      | Please update the emulator to one that supports the feature(s): VulkanVirtualQueue
+INFO         | IPv4 server found: 192.168.1.1
+INFO         | Ignore IPv6 address: 38af:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: 38af:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: 38af:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: 48b5:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: 48b5:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: 48b5:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: 60bb:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: 70c3:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: 70c3:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: 70c3:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: c8c9:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: c8c9:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Ignore IPv6 address: c8c9:88fd:9102:0:a0a9:88fd:9102:0
+INFO         | Guest GLES Driver: Auto (ext controls)
+library_mode swiftshader_indirect gpu mode swiftshader_indirect
+INFO         | Checking system compatibility:
+INFO         |   Checking: hasCompatibleHypervisor
+INFO         |      Ok: Hypervisor compatibility to run avd: `Medium_Phone_API_36.1` are met
+INFO         |   Checking: hasSufficientSystem
+INFO         |      Ok: System requirements to run avd: `Medium_Phone_API_36.1` are met
+INFO         |   Checking: hasSufficientHwGpu
+INFO         |      Ok: Hardware GPU compatibility checks are not required
+INFO         |   Checking: hasSufficientDiskSpace
+INFO         |      Ok: Disk space requirements to run avd: `Medium_Phone_API_36.1` are met
+INFO         | Storing crashdata in: C:\Users\ahmet\AppData\Local\Temp\\AndroidEmulator\emu-crash-36.2.12.db, detection is enabled for process: 13796
+INFO         | Initializing hardware OpenGLES emulation support
+INFO         | android_startOpenglesRenderer: gpu info
+INFO         | GPU #1
+  Make: 10de
+  Model: NVIDIA GeForce GTX 1650
+  Device ID: 1f99
+
+INFO         | HealthMonitor disabled.
+INFO         | initIcdPaths: ICD set to 'swiftshader', using Swiftshader ICD
+INFO         | Setting ICD filenames for the loader = C:\Users\ahmet\AppData\Local\Android\Sdk\emulator\lib64\vulkan\vk_swiftshader_icd.json
+INFO         | SharedLibrary::open for [vulkan-1.dll]
+INFO         | SharedLibrary::open for [vulkan-1.dll]: not found in map, open for the first time
+INFO         | SharedLibrary::open for [vulkan-1.dll] (win32): call LoadLibrary
+INFO         | SharedLibrary::open succeeded for [vulkan-1.dll]. File name: [C:\WINDOWS\SYSTEM32\vulkan-1.dll]
+INFO         | Added library: vulkan-1.dll
+INFO         | Selecting Vulkan device: SwiftShader Device (LLVM 10.0.0), Version: 1.2.0
+INFO         | Disabling sparse binding feature support
+INFO         | SharedLibrary::open for [libGLESv2.dll]: not found in map, open for the first time
+INFO         | SharedLibrary::open for [libGLESv2.dll] (win32): call LoadLibrary
+INFO         | SharedLibrary::open succeeded for [libGLESv2.dll]. File name: [C:\Users\ahmet\AppData\Local\Android\Sdk\emulator\lib64\gles_swiftshader\libGLESv2.dll]
+INFO         | SharedLibrary::open for [libEGL.dll]: not found in map, open for the first time
+INFO         | SharedLibrary::open for [libEGL.dll] (win32): call LoadLibrary
+INFO         | SharedLibrary::open succeeded for [libEGL.dll]. File name: [C:\Users\ahmet\AppData\Local\Android\Sdk\emulator\lib64\gles_swiftshader\libEGL.dll]
+INFO         | Initializing VkEmulation features:
+INFO         |     glInteropSupported: false
+INFO         |     useDeferredCommands: true
+INFO         |     createResourceWithRequirements: true
+INFO         |     useVulkanComposition: false
+INFO         |     useVulkanNativeSwapchain: false
+INFO         |     enable guestRenderDoc: false
+INFO         |     ASTC LDR emulation mode: Gpu
+INFO         |     enable ETC2 emulation: true
+INFO         |     enable Ycbcr emulation: false
+INFO         |     guestVulkanOnly: false
+INFO         |     useDedicatedAllocations: false
+INFO         | Graphics Adapter Vendor Google (Google Inc.)
+INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (Google SwiftShader)
+INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1)
+INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
+INFO         | Graphics Device Extensions N/A
+INFO         | Sending adb public key [QAAAAPf9nuc5LOV0KbR1yKst1YURe5pz2Bzzbuzf/n04ETnPM/dU8+ebHTX3JBNcdOR0P9ZZUqo7d2XfKvwsw7/mc8qXA4mqNdAtIJASl2y8OKcrC475fHXh84RYthJbkJW/g5USqPxi5JCZMaaKdu3nDF2IHnDETYk+YAACa1nEkoXUI9PKQvsULAnJAibGLOkfCqNKiE+tSpC7qJrnRpOQlVO0hbAQ4rVhI43i5q+lmQKUi5bS5KXGA5PayE1/Kaus2uPu6hnEziMxMm6oXrlxCbpRCvrzCbvhjgSxfwBQv2y29P8aU3O0xNHVs+WvayTm3S91bThrnGU90w+QkII/Ama3gZSbCe5TlectoqHSXfSebY+Xxgz3aYBFIFYb1/0f2zzYiKAIUrvKaf9wWA0bKyQ0gzNwzvTztjewGvq47P+BvHm1v+wo+IAex4Qrvfn1rd/2eCLWo49dxXb8wvZ3ruh5lHVVobE8U1QUiaj7reoic3Vq2wbwS5hCffRWSyoCcHoNURLzkPY7TYyuCNhFm2fwsFZd5m3I1p9QE9cV2IXUfeGh9OyJW7DCUAaMy4WLQPP1V06Z0xJStx7ZbcO6hThrlvL7+aoOeBGjloKDTdcHfcEqLtykKJy6WxyvUAkO+Lf24dEe9648s5aBdcWbkvRLVB/VxxJBfPCuL6hy39iWX2nckQEAAQA= @unknown]
+INFO         | Userspace boot properties:
+INFO         |   androidboot.boot_devices=pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0
+INFO         |   androidboot.dalvik.vm.heapsize=576m
+INFO         |   androidboot.debug.hwui.renderer=skiagl
+INFO         |   androidboot.hardware=ranchu
+INFO         |   androidboot.hardware.gltransport=pipe
+INFO         |   androidboot.hardware.vulkan=ranchu
+INFO         |   androidboot.logcat=*:V
+INFO         |   androidboot.opengles.version=196608
+INFO         |   androidboot.qemu=1
+INFO         |   androidboot.qemu.adb.pubkey=QAAAAPf9nuc5LOV0KbR1yKst1YURe5pz2Bzzbuzf/n04ETnPM/dU8+ebHTX3JBNcdOR0P9ZZUqo7d2XfKvwsw7/mc8qXA4mqNdAtIJASl2y8OKcrC475fHXh84RYthJbkJW/g5USqPxi5JCZMaaKdu3nDF2IHnDETYk+YAACa1nEkoXUI9PKQvsULAnJAibGLOkfCqNKiE+tSpC7qJrnRpOQlVO0hbAQ4rVhI43i5q+lmQKUi5bS5KXGA5PayE1/Kaus2uPu6hnEziMxMm6oXrlxCbpRCvrzCbvhjgSxfwBQv2y29P8aU3O0xNHVs+WvayTm3S91bThrnGU90w+QkII/Ama3gZSbCe5TlectoqHSXfSebY+Xxgz3aYBFIFYb1/0f2zzYiKAIUrvKaf9wWA0bKyQ0gzNwzvTztjewGvq47P+BvHm1v+wo+IAex4Qrvfn1rd/2eCLWo49dxXb8wvZ3ruh5lHVVobE8U1QUiaj7reoic3Vq2wbwS5hCffRWSyoCcHoNURLzkPY7TYyuCNhFm2fwsFZd5m3I1p9QE9cV2IXUfeGh9OyJW7DCUAaMy4WLQPP1V06Z0xJStx7ZbcO6hThrlvL7+aoOeBGjloKDTdcHfcEqLtykKJy6WxyvUAkO+Lf24dEe9648s5aBdcWbkvRLVB/VxxJBfPCuL6hy39iWX2nckQEAAQA= @unknown
+INFO         |   androidboot.qemu.avd_name=Medium_Phone_API_36.1
+INFO         |   androidboot.qemu.camera_hq_edge_processing=0
+INFO         |   androidboot.qemu.camera_protocol_ver=1
+INFO         |   androidboot.qemu.cpuvulkan.version=4202496
+INFO         |   androidboot.qemu.gltransport.drawFlushInterval=800
+INFO         |   androidboot.qemu.gltransport.name=pipe
+INFO         |   androidboot.qemu.hwcodec.avcdec=2
+INFO         |   androidboot.qemu.hwcodec.hevcdec=2
+INFO         |   androidboot.qemu.hwcodec.vpxdec=2
+INFO         |   androidboot.qemu.settings.system.screen_off_timeout=2147483647
+INFO         |   androidboot.qemu.virtiowifi=1
+INFO         |   androidboot.qemu.vsync=60
+INFO         |   androidboot.serialno=EMULATOR36X2X12X0
+INFO         |   androidboot.vbmeta.digest=985534687e7068fe518baf7329565a3d751ac7eefcd99a2439c5c663b465aa72
+INFO         |   androidboot.vbmeta.hash_alg=sha256
+INFO         |   androidboot.vbmeta.size=6784
+INFO         |   androidboot.veritymode=enforcing
+WHPX on Windows 10.0.26200 detected.
+Windows Hypervisor Platform accelerator is operational
+INFO         | Monitoring duration of emulator setup.
+INFO         | Setting display: 0 configuration to: 1080x2400, dpi: 420x420 
+INFO         | setDisplayActiveConfig 0
+USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
+INFO         | Activated packet streamer for uwb emulation
+INFO         | Activated packet streamer for bluetooth emulation
+INFO         | Boot completed in 49025 ms
+INFO         | Increasing screen off timeout, logcat buffer size to 2M.
+INFO         | IPv4 server found: 192.168.1.1
+INFO         | Ignore IPv6 address: f8d5:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: f8d5:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: f8d5:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 8dc:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 8dc:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 8dc:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 20e2:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 30ea:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 30ea:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 30ea:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 88f0:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 88f0:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 88f0:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | IPv4 server found: 192.168.1.1
+INFO         | Ignore IPv6 address: f8d5:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: f8d5:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: f8d5:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 8dc:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 8dc:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 8dc:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 20e2:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 30ea:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 30ea:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 30ea:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 88f0:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 88f0:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 88f0:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | IPv4 server found: 192.168.1.1
+INFO         | Ignore IPv6 address: f8d5:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: f8d5:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: f8d5:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 8dc:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 8dc:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 8dc:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 20e2:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 30ea:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 30ea:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 30ea:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 88f0:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 88f0:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Ignore IPv6 address: 88f0:f1ce:9102:0:60d0:f1ce:9102:0
+INFO         | Wait for emulator (pid 13796) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+
+WARNING      | Not saving state: RAM not mapped as shared
+INFO         | Saving snapshot 'default_boot' using 5 ms
+WARNING      | Emulator client has not yet been configured.. Call configure me first!

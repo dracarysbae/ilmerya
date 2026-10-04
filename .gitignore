@@ -1,0 +1,32 @@
+# Build outputs and caches
+build/
+**/build/
+.gradle/
+.kotlin/
+.idea/
+local.properties
+*.iml
+# Large or generated artifacts kept only on this machine
+artifacts/
+.design-backup/
+design-review/**/*.mp4
+*.apk
+*.aab
+*.ipa
+*.xcarchive
+# Secrets: never commit signing material or environment files
+*.jks
+*.keystore
+*.p12
+*.p8
+*.mobileprovision
+keystore.properties
+signing.properties
+.env
+**/.env
+iosApp/Config/Production.xcconfig
+# Xcode / XcodeGen output
+iosApp/*.xcodeproj/
+iosApp/DerivedData/
+xcuserdata/
+data/

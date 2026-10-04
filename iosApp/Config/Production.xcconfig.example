@@ -1,0 +1,3 @@
+// Copy to Production.xcconfig and supply your Apple signing team.
+// Production AdMob IDs are already configured in Release.xcconfig.
+DEVELOPMENT_TEAM =

@@ -1,0 +1,1 @@
+These certificates and the private signing key are synthetic test fixtures, not Apple or production credentials. The fixture root is trusted only through the verifier's internal test constructor; the production JDK root loader rejects this chain. Never install this root into a production trust store.

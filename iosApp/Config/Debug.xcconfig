@@ -1,0 +1,6 @@
+// Google-provided iOS test application and interstitial. Never replace these with live IDs.
+ADMOB_APP_ID = ca-app-pub-3940256099942544~1458002511
+ADMOB_INTERSTITIAL_ID = ca-app-pub-3940256099942544/4411468910
+
+// League service; empty keeps the league off in development builds.
+ILMERYA_API_URL =
