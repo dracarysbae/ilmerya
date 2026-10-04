@@ -13,6 +13,11 @@ concurrency:
   group: ios-simulator-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    # bash -eo pipefail: a failing xcodebuild is not hidden by '| tail'.
+    shell: bash
+
 jobs:
   simulator:
     runs-on: macos-15

@@ -19,6 +19,11 @@ concurrency:
   group: ios-testflight
   cancel-in-progress: false
 
+defaults:
+  run:
+    # bash -eo pipefail: a failing xcodebuild is not hidden by '| tail'.
+    shell: bash
+
 jobs:
   distribution:
     runs-on: macos-15

@@ -16,7 +16,7 @@ final class IOSAdsManager: NSObject, AdsManager, FullScreenContentDelegate {
     private var consentInProgress = false
     private var generation = 0
     private var retryAt = Date.distantPast
-    private var completion: (() -> KotlinUnit)?
+    private var completion: (() -> Void)?
     private var retryWork: DispatchWorkItem?
 
     private var unitID: String {
@@ -127,7 +127,7 @@ final class IOSAdsManager: NSObject, AdsManager, FullScreenContentDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 61, execute: work)
     }
 
-    func showInterstitial(onFinished: @escaping () -> KotlinUnit) {
+    func showInterstitial(onFinished: @escaping () -> Void) {
         guard completion == nil, isAdReady, let presenter = safePresenter, let ad = interstitial else {
             _ = onFinished()
             loadAd()
@@ -163,7 +163,7 @@ final class IOSAdsManager: NSObject, AdsManager, FullScreenContentDelegate {
         loadAd()
     }
 
-    func showPrivacyOptions(onFinished: @escaping () -> KotlinUnit) {
+    func showPrivacyOptions(onFinished: @escaping () -> Void) {
         guard !consentInProgress, completion == nil, isPrivacyOptionsRequired,
               let presenter = safePresenter else { _ = onFinished(); return }
         consentInProgress = true
