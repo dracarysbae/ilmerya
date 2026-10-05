@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -94,50 +95,67 @@ fun SmallLabel(text: String, modifier: Modifier = Modifier) {
 
 @Composable
 fun Rules() {
-    Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         VisualTutorial()
-        Rule("01", words("Yerini seç", "Choose a column"), words("Bir sütuna dokun. Renkli çerçeve, taşın nereye yerleşeceğini gösterir. Yerleştir düğmesine bas.", "Tap a column. The coloured outline shows where your stone will land. Press Place."))
-        Rule("02", words("Üç taşı buluştur", "Connect three"), words("Aynı sayıdaki en az üç komşu taş birleşir ve iki kat değerli tek bir taşa dönüşür. Altı yöndeki komşular sayılır.", "At least three neighbouring stones of equal value fuse into one stone worth twice as much. All six directions count."))
-        Rule("03", words("Zinciri kur", "Build a cascade"), words("Boşalan yerlere taşlar düşer. Yeni birleşmeler zincir oluşturur. Her dalga daha çok puan ve bir enerji kazandırır.", "Stones fall into the gaps. New matches create a cascade. Each wave earns more points and one energy."))
-        Rule("04", words("Devir ile yön değiştir", "Turn the tide with Cycle"), words("3 enerji harca: seçili sütunun en alttaki taşı en üste çıkar, diğerleri birer yuva iner. Sıradaki taşın değişmez. Yeni komşuluklar, yeni zincirler!", "Spend 3 energy to lift the bottom stone of the selected column to the top; the others move down one socket. Your next stone stays the same. New neighbours, new cascades!"))
-        Rule("05", words("İlerisini planla", "Plan ahead"), words("Başlangıçta 2, 4, 8 ve 16 gelir. 18 yerleştirmeden sonra açılan yeni torbalara 32, 54 yerleştirmeden sonra 64 katılır. Görünen sıradaki taşlar değişmez; küçük taşlar her zaman gelmeye devam eder.", "Start with 2, 4, 8 and 16. New bags add 32 after 18 placements and 64 after 54. Your preview stays unchanged, and small stones keep arriving."))
-        Text(words("En fazla 6 enerji biriktirebilirsin. Tahta dolsa bile kullanılabilir bir Devir hamlen varsa oyun devam eder.", "You can store up to 6 energy. Even on a full board, the game goes on while you have a Cycle you can use."), color = C.Accent, fontSize = 13.sp)
+        Text(words("Yeni torbalar: başta 2–16 · 18 yerleştirmeden sonra 32 · 54'ten sonra 64. Küçük taşlar hep gelir.",
+            "New bags: 2–16 at first · 32 after 18 placements · 64 after 54. Small stones always keep coming."),
+            color = C.TextDim, fontSize = 11.sp, lineHeight = 15.sp)
     }
 }
-@Composable private fun Rule(number: String, title: String, detail: String) {
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(number, color = C.Accent, fontSize = 20.sp, fontWeight = FontWeight.Black, modifier = Modifier.width(30.dp))
-        Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
-            Text(title, color = C.TextPrimary, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            Text(detail, color = C.TextDim, fontSize = 13.sp, lineHeight = 20.sp)
+
+/**
+ * Every popup uses this container: it fits a small phone without scrolling, sits 16 dp from the
+ * screen edges, and closes when the player taps outside it (unless [dismissOnOutside] is false).
+ */
+@Composable
+fun IlmeryaDialog(title: String, onDismiss: () -> Unit, corner: (@Composable () -> Unit)? = null,
+    dismissOnOutside: Boolean = true, content: @Composable ColumnScope.() -> Unit) {
+    androidx.compose.ui.window.Dialog(onDismissRequest = onDismiss, properties = androidx.compose.ui.window.DialogProperties(
+        usePlatformDefaultWidth = false, dismissOnClickOutside = dismissOnOutside)) {
+        Column(Modifier.padding(horizontal = 16.dp).widthIn(max = 440.dp).fillMaxWidth()
+            .clip(RoundedCornerShape(26.dp)).background(C.Surface).padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(title, color = C.TextPrimary, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.weight(1f))
+                corner?.invoke()
+            }
+            content()
+        }
+    }
+}
+
+/** Right-aligned text action row used at the bottom of popups. */
+@Composable
+fun DialogButtons(vararg buttons: Pair<String, () -> Unit>, footer: String = "") {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Text(footer, color = C.TextDim, fontSize = 10.sp, modifier = Modifier.weight(1f))
+        buttons.forEachIndexed { i, (label, action) ->
+            TextButton(onClick = action, modifier = Modifier.heightIn(min = 48.dp)) {
+                Text(label, color = if (i == buttons.lastIndex) C.Accent else C.TextDim, fontWeight = FontWeight.Bold)
+            }
         }
     }
 }
 
 @Composable
 fun InfoDialog(title: String, dismiss: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
-    AlertDialog(onDismissRequest = dismiss, containerColor = C.Surface,
-        title = { Text(title, color = C.TextPrimary, fontWeight = FontWeight.Bold) },
-        text = { Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp), content = content) },
-        confirmButton = { TextButton(onClick = dismiss) { Text(words("Tamam", "Done"), color = C.Accent) } })
+    IlmeryaDialog(title, dismiss) {
+        content()
+        DialogButtons(words("Tamam", "Done") to dismiss)
+    }
 }
 
 @Composable
 fun Settings(preferences: Preferences, onChange: (Preferences) -> Unit, dismiss: () -> Unit, appVersion: String = "") {
     val ads = LocalAdsManager.current
     val sound = com.bloxtrix.hexdrop.audio.LocalSoundEngine.current
-    InfoDialog(words("Ayarlar", "Settings"), dismiss) {
+    IlmeryaDialog(words("Ayarlar", "Settings"), dismiss) {
         SmallLabel(words("SES VE MÜZİK", "SOUND & MUSIC"))
-        Setting(words("Taş ve arayüz sesleri", "Stone & interface sounds"), preferences.sound) { onChange(preferences.copy(sound = it)) }
-        Text(words("Efekt düzeyi", "Effects volume") + " · ${(preferences.soundVolume * 100).toInt()}%", color = C.TextDim)
-        val effectsLabel=words("Efekt düzeyi", "Effects volume")
-        val musicLabel=words("Müzik düzeyi", "Music volume")
-        Slider(preferences.soundVolume, { onChange(preferences.copy(soundVolume = it)) }, modifier=Modifier.semantics {contentDescription=effectsLabel}, enabled = preferences.sound,
-            onValueChangeFinished = { sound.playMerge(2) })
-        Setting(words("Oyun müziği", "Game music"), preferences.music) { onChange(preferences.copy(music = it)) }
-        Text(words("Müzik düzeyi", "Music volume") + " · ${(preferences.musicVolume * 100).toInt()}%", color = C.TextDim)
-        Slider(preferences.musicVolume, { onChange(preferences.copy(musicVolume = it)) }, modifier=Modifier.semantics {contentDescription=musicLabel}, enabled = preferences.music)
-        SmallLabel(words("OYUN VE ERİŞİLEBİLİRLİK", "PLAY & ACCESSIBILITY"))
+        AudioRow(words("Efektler", "Effects"), preferences.sound, preferences.soundVolume,
+            { onChange(preferences.copy(sound = it)) }, { onChange(preferences.copy(soundVolume = it)) }, { sound.playMerge(2) })
+        AudioRow(words("Müzik", "Music"), preferences.music, preferences.musicVolume,
+            { onChange(preferences.copy(music = it)) }, { onChange(preferences.copy(musicVolume = it)) }, {})
+        SmallLabel(words("OYUN", "PLAY"))
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(words("Dil", "Language"), color = C.TextPrimary, modifier = Modifier.weight(1f))
             // Language names are written in their own language so either choice is recognisable.
@@ -146,20 +164,45 @@ fun Settings(preferences: Preferences, onChange: (Preferences) -> Unit, dismiss:
             FilterChip(!preferences.turkish, { onChange(preferences.copy(turkish = false)) }, label = { Text("English") },
                 modifier = Modifier.heightIn(min = 48.dp))
         }
-        Setting(words("Titreşim", "Haptics"), preferences.haptics) { onChange(preferences.copy(haptics = it)) }
-        Setting(words("Hareketi azalt", "Reduce motion"), preferences.reducedMotion) { onChange(preferences.copy(reducedMotion = it)) }
-        Setting(words("Birleşme puanı önizlemesi", "Merge score preview"), preferences.preview) { onChange(preferences.copy(preview = it)) }
-        Setting(words("Tahta doluluk uyarısı", "Full-board warning"), preferences.dangerAlerts) { onChange(preferences.copy(dangerAlerts = it)) }
-        Text(words("Müzik bu oyun için özgün olarak bestelendi. Hareketi azalt seçeneği oyun ve rehber animasyonlarını da durdurur.", "The music was composed for this game. Reduce motion also stops game and tutorial animations."), color = C.TextDim, fontSize = 12.sp)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ToggleTile(words("Titreşim", "Haptics"), preferences.haptics, Modifier.weight(1f)) { onChange(preferences.copy(haptics = it)) }
+            ToggleTile(words("Hareketi azalt", "Reduce motion"), preferences.reducedMotion, Modifier.weight(1f)) { onChange(preferences.copy(reducedMotion = it)) }
+        }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ToggleTile(words("Puan önizlemesi", "Score preview"), preferences.preview, Modifier.weight(1f)) { onChange(preferences.copy(preview = it)) }
+            ToggleTile(words("Doluluk uyarısı", "Full-board alert"), preferences.dangerAlerts, Modifier.weight(1f)) { onChange(preferences.copy(dangerAlerts = it)) }
+        }
         if (ads.isPrivacyOptionsRequired) {
             Action(words("Reklam gizliliği tercihleri", "Ad privacy choices"), { ads.showPrivacyOptions {} }, Modifier.fillMaxWidth())
         }
-        if (appVersion.isNotEmpty()) Text(words("Sürüm", "Version") + " $appVersion · OzGAMES", color = C.TextDim, fontSize = 11.sp)
+        DialogButtons(words("Tamam", "Done") to dismiss,
+            footer = if (appVersion.isNotEmpty()) words("Sürüm", "Version") + " $appVersion · OzGAMES" else "OzGAMES")
     }
 }
-@Composable private fun Setting(label: String, checked: Boolean, change: (Boolean) -> Unit) {
-    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
-        Text(label, color = C.TextPrimary, modifier = Modifier.weight(1f))
-        Switch(checked, change, modifier=Modifier.semantics {contentDescription=label}, colors = SwitchDefaults.colors(checkedThumbColor = C.Background, checkedTrackColor = C.Accent))
+
+/** One line: name, volume slider and on/off switch. */
+@Composable private fun AudioRow(label: String, on: Boolean, volume: Float, toggle: (Boolean) -> Unit,
+    setVolume: (Float) -> Unit, release: () -> Unit) {
+    val volumeLabel = "$label · ${(volume * 100).toInt()}%"
+    Row(Modifier.fillMaxWidth().heightIn(min = 48.dp), verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(label, color = C.TextPrimary, modifier = Modifier.width(72.dp), maxLines = 1)
+        Slider(volume, setVolume, Modifier.weight(1f).semantics { contentDescription = volumeLabel }, enabled = on,
+            onValueChangeFinished = release,
+            colors = SliderDefaults.colors(thumbColor = C.Accent, activeTrackColor = C.Accent, inactiveTrackColor = C.Border))
+        Switch(on, toggle, modifier = Modifier.semantics { contentDescription = label },
+            colors = SwitchDefaults.colors(checkedThumbColor = C.Background, checkedTrackColor = C.Accent))
+    }
+}
+
+/** Compact two-per-row toggle: recessed with an accent lamp when on. */
+@Composable private fun ToggleTile(label: String, on: Boolean, modifier: Modifier, change: (Boolean) -> Unit) {
+    Row(modifier.heightIn(min = 52.dp).neuSurface(14.dp, recessed = on, color = if (on) C.Board else C.Surface, depth = 2.dp)
+        .clip(RoundedCornerShape(14.dp))
+        .clickable(role = Role.Switch, onClickLabel = label) { change(!on) }
+        .semantics { contentDescription = label; stateDescription = if (on) "on" else "off" }
+        .padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Box(Modifier.size(9.dp).clip(RoundedCornerShape(5.dp)).background(if (on) C.Accent else C.Border))
+        Text(label, color = if (on) C.TextPrimary else C.TextDim, fontSize = 13.sp, lineHeight = 16.sp, maxLines = 2)
     }
 }

@@ -111,10 +111,9 @@ import kotlin.time.TimeSource
                 modifier = Modifier.heightIn(min = 48.dp)) { Text(words("Lig hesabımı sil", "Delete my league account"), color = C.TextDim) }
         }
     }
-    if (delete) AlertDialog(onDismissRequest = { delete = false }, containerColor = C.Surface,
-        title = { Text(words("Lig hesabın silinsin mi?", "Delete your league account?"), color = C.TextPrimary) },
-        text = { Text(words("Sunucudaki lig profilin, skorların, lig oyunu kayıtların ve geçmiş derecelerin kalıcı olarak silinir. Cihazdaki kişisel rekorun ve ayarların korunur.",
-            "Your league profile, scores, ranked run records and past ranks are permanently deleted from the server. Your personal best and settings on this device are kept."), color = C.TextDim) },
-        confirmButton = { TextButton(onClick = { delete = false; scope.launch { league.deleteAccount() } }) { Text(words("Kalıcı olarak sil", "Delete permanently"), color = C.Danger) } },
-        dismissButton = { TextButton(onClick = { delete = false }) { Text(words("Vazgeç", "Cancel")) } })
+    if (delete) IlmeryaDialog(words("Lig hesabın silinsin mi?", "Delete your league account?"), { delete = false }) {
+        Text(words("Sunucudaki lig profilin, skorların, lig oyunu kayıtların ve geçmiş derecelerin kalıcı olarak silinir. Cihazdaki kişisel rekorun ve ayarların korunur.",
+            "Your league profile, scores, ranked run records and past ranks are permanently deleted from the server. Your personal best and settings on this device are kept."), color = C.TextDim)
+        DialogButtons(words("Vazgeç", "Cancel") to { delete = false }, words("Kalıcı olarak sil", "Delete permanently") to { delete = false; scope.launch { league.deleteAccount() } })
+    }
 }

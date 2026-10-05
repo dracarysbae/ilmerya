@@ -45,15 +45,15 @@ class ExperienceTest {
     @Test fun a_firstLaunchTutorialPlayPauseResumeAndLeague() {
         capture("01-menu")
         ui.onNodeWithText("Ayarlar").performClick()
-        ui.onNodeWithText("Taş ve arayüz sesleri").assertIsDisplayed()
-        ui.onNodeWithText("Oyun müziği").assertIsDisplayed()
+        ui.onNodeWithText("Efektler").assertIsDisplayed()
+        ui.onNodeWithText("Müzik").assertIsDisplayed()
         capture("02-settings")
         ui.onNodeWithText("Tamam").performClick()
 
         ui.onNodeWithText("DİNGİN  ·  Kendi ritminde").performScrollTo().performClick()
         ui.onNodeWithText("İlk taşından önce").assertIsDisplayed()
         ui.onNodeWithText("Birleştir", useUnmergedTree = true).performClick()
-        ui.onNodeWithText("Yan yana üç adet 2, tek bir 4 olur. Çapraz komşular da sayılır.").assertIsDisplayed()
+        ui.onNodeWithText("Aynı sayıdaki en az üç komşu taş birleşir ve iki kat değerli tek taşa dönüşür. Altı yönün hepsi sayılır.").assertIsDisplayed()
         capture("03-first-play-tutorial")
         ui.onNodeWithText("Başla").performClick()
 

@@ -30,14 +30,18 @@ import kotlin.math.*
     }
     val motion by animateFloatAsState(if (after) 1f else 0f, tween(if (reduced) 0 else 650), label = "lesson")
     val titles = listOf(words("Yerleştir", "Place"), words("Birleştir", "Merge"), words("Zincir", "Cascade"), words("Devir", "Cycle"))
+    // Each tab carries its own rule, so the whole guide fits one screen without scrolling.
     val caption = when (page) {
-        0 -> words("Seçili sütunun boş yuvasına bir taş yerleşir.", "A stone lands in the open socket of your selected column.")
-        1 -> words("Yan yana üç adet 2, tek bir 4 olur. Çapraz komşular da sayılır.", "Three neighbouring 2s become one 4. Diagonal neighbours count too.")
-        2 -> words("İlk birleşmeden sonra düşen taş, iki adet 4 ile buluşur: ikinci dalgada 8 oluşur.", "After the first merge, the falling stone joins two 4s: the second wave creates an 8.")
-        else -> words("3 enerji: 8 en üste çıkar; 2 ve 4 bir yuva aşağı iner. Sıradaki taş değişmez.", "3 energy: the 8 moves to the top; the 2 and 4 shift down. Your next stone stays the same.")
+        0 -> words("Bir sütun seç; çerçeve taşın ineceği yuvayı gösterir. Yerleştir'e bas.",
+            "Pick a column; the outline shows the socket your stone will land in. Press Place.")
+        1 -> words("Aynı sayıdaki en az üç komşu taş birleşir ve iki kat değerli tek taşa dönüşür. Altı yönün hepsi sayılır.",
+            "Three or more neighbouring stones of equal value fuse into one stone worth twice as much. All six directions count.")
+        2 -> words("Taşlar boşluklara düşer, yeni birleşmeler zincir kurar. Her dalga daha çok puan ve 1 enerji verir.",
+            "Stones fall into the gaps and new matches cascade. Every wave scores more and gives 1 energy.")
+        else -> words("3 enerji: seçili sütunun en alt taşı en üste çıkar, diğerleri bir yuva iner; sıradaki taş değişmez. En fazla 6 enerji. Tahta dolsa bile Devir varsa oyun sürer.",
+            "3 energy: the selected column's bottom stone moves to the top and the rest move down; your next stone stays. Up to 6 energy. A full board plays on while a Cycle exists.")
     }
-    Column(Modifier.fillMaxWidth().neuSurface(18.dp, recessed = true, color = C.Board).padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        SmallLabel(words("DOKUNARAK KEŞFET", "EXPLORE THE MOVES"))
+    Column(Modifier.fillMaxWidth().neuSurface(18.dp, recessed = true, color = C.Board).padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             titles.forEachIndexed { i, title ->
                 TextButton(onClick = { page = i }, modifier=Modifier.weight(1f), contentPadding = PaddingValues(2.dp)) {
@@ -45,7 +49,7 @@ import kotlin.math.*
                 }
             }
         }
-        Canvas(Modifier.fillMaxWidth().height(168.dp).semantics { contentDescription = caption }) {
+        Canvas(Modifier.fillMaxWidth().height(140.dp).semantics { contentDescription = caption }) {
             val r = min(size.width / 7.5f, size.height / 5.5f)
             val cx = size.width / 2; val cy = size.height / 2
             fun stone(x: Float, y: Float, v: Int) { drawHexCell(x, y, r, v, measure, materials = materials) }
@@ -76,7 +80,7 @@ import kotlin.math.*
             }
             drawLine(C.Accent.copy(alpha=.45f),Offset(size.width*.15f,size.height-3.dp.toPx()),Offset(size.width*.85f,size.height-3.dp.toPx()),2.dp.toPx(),StrokeCap.Round)
         }
-        Text(caption,color=C.TextPrimary,fontSize=12.sp)
+        Text(caption,color=C.TextPrimary,fontSize=13.sp,lineHeight=18.sp,modifier=Modifier.heightIn(min=54.dp))
         if (reduced) TextButton(onClick={after=!after}) { Text(words("Önce / sonra", "Before / after")) }
     }
 }

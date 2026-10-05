@@ -83,33 +83,31 @@ fun HexDropApp(vm: HexDropViewModel, initialPreferences: Preferences = Preferenc
             }
             if (settings) Settings(preferences, { preferences = it }, { settings = false }, appVersion)
             replace?.let { request ->
-                AlertDialog(onDismissRequest = { replace = null }, containerColor = C.Surface,
-                    title = { Text(words("Yarım kalan oyun silinsin mi?", "Replace your unfinished run?"), color = C.TextPrimary) },
-                    text = { Text(if (ranked) words("Devam eden lig oyunun kapanır ve bu hafta için sayılmaz. Yeni oyun onun yerine başlar.",
+                IlmeryaDialog(words("Yarım kalan oyun silinsin mi?", "Replace your unfinished run?"), { replace = null }) {
+                    Text(if (ranked) words("Devam eden lig oyunun kapanır ve bu hafta için sayılmaz. Yeni oyun onun yerine başlar.",
                             "Your unfinished ranked run will close and will not count this week. A new game starts in its place.")
                         else words("Kaldığın tahta silinir ve yeni oyun başlar. En iyi puanın korunur.",
-                            "Your current board will be cleared and a new game will start. Your best score is kept."), color = C.TextDim) },
-                    confirmButton = { TextButton(onClick = {
+                            "Your current board will be cleared and a new game will start. Your best score is kept."), color = C.TextDim)
+                    DialogButtons(words("Vazgeç", "Cancel") to { replace = null }, words("Yeni oyun başlat", "Start new game") to {
                         replace = null
                         when (request) { is StartRequest.Free -> startFree(request.mode); StartRequest.League -> startLeague() }
-                    }) { Text(words("Yeni oyun başlat", "Start new game"), color = C.Accent) } },
-                    dismissButton = { TextButton(onClick = { replace = null }) { Text(words("Vazgeç", "Cancel")) } })
+                    })
+                }
             }
             if (restoreNotice == "expired" && screen == Screen.Menu) {
-                AlertDialog(onDismissRequest = vm::clearRestoreNotice, containerColor = C.Surface,
-                    title = { Text(words("Lig bileti kapandı", "League ticket closed"), color = C.TextPrimary) },
-                    text = { Text(words("Kaydedilen lig oyununun süresi doldu. Tahtan korunarak serbest oyun olarak devam edebilirsin; bu oyun sıralamaya girmez.",
-                        "The saved ranked run expired. Your board is kept as a free game; it will not enter the standings."), color = C.TextDim) },
-                    confirmButton = { TextButton(onClick = vm::clearRestoreNotice) { Text(words("Tamam", "OK"), color = C.Accent) } })
+                IlmeryaDialog(words("Lig bileti kapandı", "League ticket closed"), vm::clearRestoreNotice) {
+                    Text(words("Kaydedilen lig oyununun süresi doldu. Tahtan korunarak serbest oyun olarak devam edebilirsin; bu oyun sıralamaya girmez.",
+                        "The saved ranked run expired. Your board is kept as a free game; it will not enter the standings."), color = C.TextDim)
+                    DialogButtons(words("Tamam", "OK") to vm::clearRestoreNotice)
+                }
             }
             pendingMode?.let { mode ->
-                AlertDialog(onDismissRequest = { pendingMode = null }, containerColor = C.Surface,
-                    title = { Text(words("İlk taşından önce", "Before your first stone")) },
-                    text = { Column(Modifier.verticalScroll(rememberScrollState())) { Rules() } },
-                    confirmButton = { TextButton(onClick = {
+                IlmeryaDialog(words("İlk taşından önce", "Before your first stone"), { pendingMode = null }) {
+                    Rules()
+                    DialogButtons(words("Geri", "Back") to { pendingMode = null }, words("Başla", "Let's play") to {
                         preferences = preferences.copy(tutorialSeen = true); pendingMode = null; vm.restart(mode); go(Screen.Game)
-                    }) { Text(words("Başla", "Let's play"), color = C.Accent) } },
-                    dismissButton = { TextButton(onClick = { pendingMode = null }) { Text(words("Geri", "Back")) } })
+                    })
+                }
             }
         }
     }
