@@ -78,6 +78,8 @@ import kotlin.time.TimeSource
                     "A ranked result is waiting to be sent. Tap Refresh when you are online, then start a new ranked run.")
                 "update" -> words("Lig kuralları güncellendi. Lige devam etmek için uygulamayı güncelle.", "League rules changed. Update the app to keep playing ranked runs.")
                 "delete_failed" -> words("Hesap silinemedi. Bağlantını kontrol edip tekrar dene.", "The account could not be deleted. Check your connection and try again.")
+                "signin" -> words(if (league.provider == "game_center") "Game Center girişi tamamlanmadı. Tekrar dene." else "Google Play Oyunlar girişi tamamlanmadı. Tekrar dene.",
+                    if (league.provider == "game_center") "Game Center sign-in was not completed. Try again." else "Google Play Games sign-in was not completed. Try again.")
                 "busy" -> words("Sunucu yoğun. Biraz sonra tekrar dene.", "The server is busy. Try again shortly.")
                 else -> words("Bağlantı kurulamadı veya oturumun yenilenmeli. Tekrar deneyebilirsin; serbest oyun etkilenmez.",
                     "Connection failed or your session needs renewal. Try again; free play is unaffected.")

@@ -10,12 +10,13 @@ private class MapStorage : LeagueStorage {
     override fun put(key: String, value: String?, commit: Boolean) { if (value == null) values.remove(key) else values[key] = value }
 }
 
-private class FakeIdentity(var signedIn: Boolean = true) : LeagueIdentity {
+private class FakeIdentity(var signedIn: Boolean = true, var interactiveFails: Boolean = false) : LeagueIdentity {
     override val provider = "play_games"
     override val authPath = "/v1/auth/play-games"
     var interactiveCalls = 0; var silentCalls = 0
     override suspend fun proof(interactive: Boolean): String? {
         if (interactive) interactiveCalls++ else silentCalls++
+        if (interactive && interactiveFails) return null
         return if (signedIn || interactive) """{"code":"one-use-code-123"}""" else null
     }
 }
@@ -56,6 +57,20 @@ class LeagueRepositoryTest {
         repo.refresh()
         assertEquals(0, identity.silentCalls)
         assertTrue(repo.state.value.loginRequired)
+    }
+
+    @Test fun anIncompletePlatformSignInIsReportedAndSendsNothing() = runTest {
+        val server = FakeServer(); val identity = FakeIdentity(interactiveFails = true)
+        val repo = LeagueRepository(server, MapStorage(), identity, configured = true)
+        repo.signIn()
+        assertEquals("signin", repo.state.value.error)
+        assertFalse(repo.state.value.signingIn)
+        assertTrue(repo.state.value.loginRequired)
+        assertTrue(server.requests.none { it.contains("/v1/auth") })
+        identity.interactiveFails = false
+        repo.signIn()
+        assertEquals("", repo.state.value.error)
+        assertFalse(repo.state.value.loginRequired)
     }
 
     @Test fun joiningKeepsTheSessionAcrossLaunchesAndRenewsAnExpiredToken() = runTest {

@@ -6,8 +6,8 @@ Durumlar ayrı tutulur: kod yazıldı / derlendi / otomatik test edildi / emüla
 
 | Alan | Kanıt |
 |---|---|
-| Ortak kurallar, kayıt/geri yükleme, lig istemcisi, ses kuyrukları | 43 JVM testi geçti (`:shared:testDebugUnitTest`), macOS CI'da da geçti |
-| Sunucu | 34 test: Game Center imza doğrulaması, gerçek HTTP ile lig oyunu gönderme/tekrar/sıralama/hesap silme, PostgreSQL TLS kuralları |
+| Ortak kurallar, kayıt/geri yükleme, lig istemcisi, ses kuyrukları | 46 JVM testi geçti (`:shared:testDebugUnitTest`), macOS CI'da da geçti |
+| Sunucu | 35 test (sağlayıcının `postgresql://` dizesi de verify-full ile kabul ediliyor): Game Center imza doğrulaması, gerçek HTTP ile lig oyunu gönderme/tekrar/sıralama/hesap silme, PostgreSQL TLS kuralları |
 | Android debug / QA / imzalı release | Derlendi. QA (R8 + test reklamı) API 36 emülatörde açıldı, test geçiş reklamı yüklendi, çökme yok. Release AAB İlmerya yükleme anahtarıyla imzalı (SHA-1 `8D:5B:7D:17:E8:2A:58:09:0A:1A:AA:9C:6B:65:8B:5C:16:9E:75:1C`) |
 | Android arayüz akışı | `ExperienceTest` API 36 emülatörde geçti (rehber, yerleştirme, geri ile duraklatma, menüden devam, lig ekranı, geri) |
 | Android CI | GitHub Actions run 37236964802: birim + sunucu testleri, debug/QA (R8) derlemeleri, API 35 (Pixel 7) ve API 30 (Nexus 5X) emülatörlerinde iki arayüz testi (ilk açılış rehberi, oynanış, geri ile duraklatma, menüden devam, lig ekranı; etkinlik yeniden oluşturulduğunda tahta ve dil ayarı korunuyor) geçti |
@@ -16,13 +16,18 @@ Durumlar ayrı tutulur: kod yazıldı / derlendi / otomatik test edildi / emüla
 | iOS | GitHub Actions run 37234212393: Xcode 26 / iOS 26.2 simülatöründe derlendi, kuruldu, iki açılışta 25 sn sonra çalışıyordu, çökme raporu yok; imzasız Release cihaz derlemesi (üretim reklam kimliği doğrulamasıyla) geçti. Oynanış, reklam, Game Center ve ses henüz iOS'ta test edilmedi |
 | Mağaza kayıtları | Play Console: İlmerya `com.ozgames.ilmerya` (taslak, uygulama kimliği 4975647079024897021). App Store Connect: İlmerya, Apple ID 6819181162, SKU `ilmerya-ios`, birincil dil tr. Apple Developer: App ID `com.ozgames.ilmerya` (Game Center açık), "Ilmerya App Store" profili (mevcut dağıtım sertifikasıyla, 28.09.2027). Google Cloud: `ilmerya` projesi (120496089291). Neon: `ilmerya-league` (Frankfurt, Free) |
 | Gerçek cihaz (Galaxy A56, Android 16) | Arayüz testleri geçti; QA (R8) derlemesiyle tam oyun → test geçiş reklamı → "Yeni rekor" sonucu; süreç öldürülünce oyun aynı tahtayla geri geldi; müzik AudioTrack ile çalıyor (cihaz medya sesi sıfırdı) |
+| Lig sunucusu (canlı) | https://ilmerya-league.onrender.com — Render Free, ayrı servis `ilmerya-league` (Bloxboom'dan bağımsız), veritabanı Neon `ilmerya-league`. `/health` → `{"game":"ilmerya","ruleset":1,"ok":true}`; `/privacy`, `/support`, `/delete-account`, `/app-ads.txt` 200; misafir 403; geçersiz kod 400 |
+| Play Games / OAuth | Google Auth Platform "In production" (External, ozgamesstudio24). OAuth istemcileri: Android yükleme anahtarı, Android Play imzalama anahtarı (SHA-1 `C6:4A:BA:79:8C:55:2D:3C:A7:B3:BC:40:71:3E:D2:6A:C2:C8:C6:C0`), web (sunucu; sır yalnızca Render'da). PGS projesi 120496089291'e üç kimlik bilgisi bağlandı; PGS test kullanıcıları + dahili test kanalı eklendi; PGS henüz yayınlanmadı |
+| Gerçek hesapla lig girişi | Galaxy A56'da lig-QA derlemesi (`-PILMERYA_QA_LEAGUE=true`: mağaza paketi + yükleme anahtarı, yalnız test reklamı) ile Google Play Oyunlar girişi → canlı sunucu doğruladı → lig ekranında oyuncu adı ve haftalık sıralama görüldü |
+| Google Play dahili test | 1.0.0 (versionCode 1) AAB yüklendi ve dahili test kanalında yayınlandı; "Ilmerya testers" listesi (4 hesap); katılım: https://play.google.com/apps/internaltest/4701736684417648322 |
 | Küçük ekran | 360×640 dp: tüm pencereler kaydırmasız sığıyor, dış dokunuşla kapanıyor; kompakt oyun düzeni; CI'da Nexus 5 emülatörü |
 
 ## Henüz doğrulanmayanlar / eksikler
 
-- Gerçek Android cihaz testi (telefon başka oturumda kullanımdaydı). Gerçek iPhone testi yok.
+- Gerçek iPhone testi yok. Canlı ligde tamamlanmış bir lig oyununun gönderimi gerçek cihazda henüz denenmedi (sunucu testlerinde HTTP üzerinden doğrulandı).
 - Sesler ölçümle düzeltildi; telefon hoparlörü ve kulaklıkla dinleme testi yapılmadı.
-- Lig canlı değil: Render servisi, Play Games projesi/OAuth istemcileri, Game Center App Store kaydı ve gerçek hesapla uçtan uca test bekliyor. Mağaza sürümü lig URL'si ve kimlikler girildikten sonra derlenecek.
+- Play Games Hizmetleri yayınlanmadı (mağaza girişi tamamlanınca yayınlanacak); o zamana kadar yalnız PGS test kullanıcıları lige girebilir. Game Center tarafı iOS derlemesi bekliyor.
+- Render Free örneği 15 dk boşta kalınca uyur; ilk istek ~50 sn gecikebilir (uygulama zaman aşımı 70 sn).
 - iOS imzası ve TestFlight: profil ve App Store Connect API gizlileri GitHub `apple-distribution` ortamında. Eksik: mevcut dağıtım sertifikasının .p12 dosyası (korumalı klasörde; `tools/set-ios-secrets.ps1` ile kullanıcı ekler).
 - GitHub Actions: özel depo kotası dolduğu için kullanıcı onayıyla depo herkese açıldı (gizli bilgi taraması temiz).
 - AdMob: uygulamalar mağazaya bağlanmadı; `app-ads.txt` lig sunucusunda hazır, alan adı yayında değil. UMP mesajları AdMob'da yayınlanmalı.

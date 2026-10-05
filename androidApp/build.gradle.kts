@@ -98,8 +98,13 @@ android {
         create("qa") {
             initWith(getByName("release"))
             matchingFallbacks += listOf("release")
-            signingConfig = signingConfigs.getByName("debug")
-            applicationIdSuffix = ".qa"
+            // -PILMERYA_QA_LEAGUE=true keeps the store package and upload key so Play Games sign-in
+            // can be tested on a device; ads stay on Google's test IDs either way.
+            val leagueQa = providers.gradleProperty("ILMERYA_QA_LEAGUE").orNull == "true"
+            val upload = signingConfigs.findByName("upload")
+            check(!leagueQa || upload != null) { "ILMERYA_QA_LEAGUE needs the upload signing properties" }
+            signingConfig = if (leagueQa) upload else signingConfigs.getByName("debug")
+            applicationIdSuffix = if (leagueQa) null else ".qa"
             versionNameSuffix = "-qa"
             manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
             buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"ca-app-pub-3940256099942544/1033173712\"")

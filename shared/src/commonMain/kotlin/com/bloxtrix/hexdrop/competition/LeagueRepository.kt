@@ -108,7 +108,8 @@ class LeagueRepository(
         _state.update { it.copy(signingIn = true, error = "") }
         try {
             val proof = identity.proof(true)
-            if (proof == null) { _state.update { it.copy(signingIn = false) }; return }
+            // Cancelled, or the platform did not authenticate this profile (for example not a tester yet).
+            if (proof == null) { _state.update { it.copy(signingIn = false, error = "signin") }; return }
             mutex.withLock { authenticate(proof) }
             refresh()
         } catch (e: CancellationException) { throw e }
