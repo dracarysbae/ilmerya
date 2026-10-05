@@ -44,8 +44,10 @@ cp "$WORK/profile.mobileprovision" "$PROFILES/$UUID.mobileprovision"
 
 # Applied only to the app target through Release.xcconfig; Swift packages keep their own settings.
 # xcconfig treats "//" as a comment, so the URL scheme is written as https:/$()/host.
+# An empty repository variable keeps the production URL from Release.xcconfig.
 URL_VALUE="${ILMERYA_API_URL:-}"
-URL_VALUE="${URL_VALUE/https:\/\//https:\/\$()\/}"
+URL_LINE=""
+[ -n "$URL_VALUE" ] && URL_LINE="ILMERYA_API_URL = ${URL_VALUE/https:\/\//https:\/\$()\/}"
 cat > iosApp/Config/Production.xcconfig <<EOF
 DEVELOPMENT_TEAM = $APPLE_TEAM_ID
 CODE_SIGN_STYLE = Manual
@@ -53,7 +55,7 @@ CODE_SIGN_IDENTITY = Apple Distribution
 PROVISIONING_PROFILE_SPECIFIER = $UUID
 OTHER_CODE_SIGN_FLAGS = --keychain $KEYCHAIN
 CURRENT_PROJECT_VERSION = $BUILD_NUMBER
-ILMERYA_API_URL = $URL_VALUE
+$URL_LINE
 EOF
 
 (cd iosApp && xcodegen generate)
