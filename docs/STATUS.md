@@ -14,14 +14,17 @@ Durumlar ayrı tutulur: kod yazıldı / derlendi / otomatik test edildi / emüla
 | Süreç ölümünden sonra geri yükleme | Emülatörde `force-stop` sonrası "Kaldığın yerden devam et" göründü |
 | Zincir animasyonu | Emülatör ekran kaydında 4 dalgalı zincir ve etiketler görüldü; ilk kare sıçraması düzeltildi |
 | iOS | GitHub Actions run 37234212393: Xcode 26 / iOS 26.2 simülatöründe derlendi, kuruldu, iki açılışta 25 sn sonra çalışıyordu, çökme raporu yok; imzasız Release cihaz derlemesi (üretim reklam kimliği doğrulamasıyla) geçti. Oynanış, reklam, Game Center ve ses henüz iOS'ta test edilmedi |
-| Mağaza kayıtları | Play Console: İlmerya `com.ozgames.ilmerya` oluşturuldu (taslak). Google Cloud: `ilmerya` projesi. Neon: `ilmerya-league` (Frankfurt, Free) |
+| Mağaza kayıtları | Play Console: İlmerya `com.ozgames.ilmerya` (taslak, uygulama kimliği 4975647079024897021). App Store Connect: İlmerya, Apple ID 6819181162, SKU `ilmerya-ios`, birincil dil tr. Apple Developer: App ID `com.ozgames.ilmerya` (Game Center açık), "Ilmerya App Store" profili (mevcut dağıtım sertifikasıyla, 28.09.2027). Google Cloud: `ilmerya` projesi (120496089291). Neon: `ilmerya-league` (Frankfurt, Free) |
+| Gerçek cihaz (Galaxy A56, Android 16) | Arayüz testleri geçti; QA (R8) derlemesiyle tam oyun → test geçiş reklamı → "Yeni rekor" sonucu; süreç öldürülünce oyun aynı tahtayla geri geldi; müzik AudioTrack ile çalıyor (cihaz medya sesi sıfırdı) |
+| Küçük ekran | 360×640 dp: tüm pencereler kaydırmasız sığıyor, dış dokunuşla kapanıyor; kompakt oyun düzeni; CI'da Nexus 5 emülatörü |
 
 ## Henüz doğrulanmayanlar / eksikler
 
 - Gerçek Android cihaz testi (telefon başka oturumda kullanımdaydı). Gerçek iPhone testi yok.
 - Sesler ölçümle düzeltildi; telefon hoparlörü ve kulaklıkla dinleme testi yapılmadı.
 - Lig canlı değil: Render servisi, Play Games projesi/OAuth istemcileri, Game Center App Store kaydı ve gerçek hesapla uçtan uca test bekliyor. Mağaza sürümü lig URL'si ve kimlikler girildikten sonra derlenecek.
-- iOS imzası ve TestFlight: `apple-distribution` ortam gizlileri ve App Store provizyon profili bekleniyor (Issuer ID gerekli). App Store Connect uygulama kaydı yok.
+- iOS imzası ve TestFlight: profil ve App Store Connect API gizlileri GitHub `apple-distribution` ortamında. Eksik: mevcut dağıtım sertifikasının .p12 dosyası (korumalı klasörde; `tools/set-ios-secrets.ps1` ile kullanıcı ekler).
+- GitHub Actions: özel depo kotası dolduğu için kullanıcı onayıyla depo herkese açıldı (gizli bilgi taraması temiz).
 - AdMob: uygulamalar mağazaya bağlanmadı; `app-ads.txt` lig sunucusunda hazır, alan adı yayında değil. UMP mesajları AdMob'da yayınlanmalı.
 - Gerçek ekran görüntüleri, öne çıkan görsel, içerik derecelendirmesi, Data Safety ve App Privacy formları (taslak: `store-assets/listing.md`).
 - Play üretim erişimi için 12 testçi × 14 gün kapalı test şartı.
