@@ -1,6 +1,6 @@
 # İlmerya — store listing (draft, matches 1.0.0 behaviour)
 
-Package / bundle: `com.ozgames.ilmerya` · Developer: OzGAMES · Contact: ozgames.dev@gmail.com
+Package / bundle: `com.ozgames.ilmerya` · Developer: OzGAMES · Contact: ozgamesstudio24@gmail.com
 Privacy: `https://<league host>/privacy` · Support: `https://<league host>/support` · Account deletion: `https://<league host>/delete-account`
 (Host becomes final when the Render service is live; all three pages are served by the league service.)
 

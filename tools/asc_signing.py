@@ -86,7 +86,7 @@ def setup():
         key_path.write_bytes(key.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()))
         csr = x509.CertificateSigningRequestBuilder().subject_name(x509.Name([
             x509.NameAttribute(NameOID.COMMON_NAME, "OzGAMES Ilmerya Distribution"),
-            x509.NameAttribute(NameOID.EMAIL_ADDRESS, "ozgames.dev@gmail.com"),
+            x509.NameAttribute(NameOID.EMAIL_ADDRESS, "ozgamesstudio24@gmail.com"),
             x509.NameAttribute(NameOID.COUNTRY_NAME, "TR")])).sign(key, hashes.SHA256())
         created = call("POST", "/certificates", {"data": {"type": "certificates", "attributes": {
             "certificateType": "DISTRIBUTION", "csrContent": csr.public_bytes(serialization.Encoding.PEM).decode()}}})["data"]
