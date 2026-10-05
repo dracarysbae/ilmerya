@@ -42,6 +42,22 @@ class LeagueDatabaseTest {
         }
     }
 
+    @Test fun providerUriIsConvertedAndStillFullyVerified() {
+        val jdbc = jdbcPostgresUrl(
+            " postgresql://neondb_owner:p%40ss@ep-x-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require\n")
+        assertEquals("jdbc:postgresql://ep-x-pooler.eu-central-1.aws.neon.tech/neondb?user=neondb_owner&password=p%40ss" +
+            "&sslmode=require&channelBinding=require", jdbc)
+        val props = requireNotNull(org.postgresql.Driver.parseURL(jdbc, null))
+        assertEquals("p@ss", props.getProperty("password"))
+        val secure = verifiedPostgresUrl(jdbc)
+        assertTrue("sslmode=verify-full" in secure, secure)
+        assertEquals("jdbc:postgresql://db.example/league", jdbcPostgresUrl("jdbc:postgresql://db.example/league"))
+        assertFailsWith<IllegalArgumentException> { jdbcPostgresUrl("mysql://u:p@db.example/league") }
+        assertFailsWith<IllegalArgumentException> {
+            LeagueDatabase(":memory:", "postgres://u:p@db.example.invalid/league?sslmode=disable")
+        }
+    }
+
     @Test fun transactionFailureRollsBackAndConnectionCanBeReused() {
         LeagueDatabase(":memory:", null).use { database ->
             database.connection { it.createStatement().use { s -> s.execute("CREATE TABLE probe(value TEXT)") } }

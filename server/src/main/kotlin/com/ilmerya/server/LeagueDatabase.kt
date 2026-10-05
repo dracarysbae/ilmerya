@@ -5,6 +5,29 @@ import com.zaxxer.hikari.HikariDataSource
 import java.sql.Connection
 import java.sql.DriverManager
 
+/**
+ * Accept the provider's libpq URI (postgresql://user:password@host/db?sslmode=require) as copied
+ * from its console, so the secret can be pasted unchanged into the service environment.
+ */
+internal fun jdbcPostgresUrl(url: String): String {
+    val trimmed = url.trim()
+    if (trimmed.startsWith("jdbc:")) return trimmed
+    val scheme = listOf("postgresql://", "postgres://").firstOrNull { trimmed.startsWith(it) }
+    requireNotNull(scheme) { "Expected a PostgreSQL URL" }
+    val uri = java.net.URI(trimmed)
+    val host = requireNotNull(uri.rawAuthority?.substringAfterLast('@')) { "Invalid PostgreSQL URL" }
+    val params = mutableListOf<String>()
+    uri.rawUserInfo?.let { info ->
+        params += "user=" + info.substringBefore(':')
+        if (':' in info) params += "password=" + info.substringAfter(':')
+    }
+    uri.rawQuery?.split('&')?.filter { it.isNotBlank() }?.forEach { param ->
+        // libpq spells it channel_binding; the JDBC driver calls it channelBinding.
+        params += if (param.startsWith("channel_binding=")) "channelBinding=" + param.substringAfter('=') else param
+    }
+    return "jdbc:postgresql://$host${uri.rawPath ?: ""}" + if (params.isEmpty()) "" else "?" + params.joinToString("&")
+}
+
 /** Use the JVM's trusted CA bundle in containers, without a user-local root.crt file. */
 internal fun verifiedPostgresUrl(url: String): String {
     require(url.startsWith("jdbc:postgresql://")) { "Expected a PostgreSQL JDBC URL" }
@@ -42,7 +65,7 @@ internal class LeagueDatabase(path: String, jdbcUrl: String?) : AutoCloseable {
 
     init {
         if (postgres) {
-            val secureUrl = verifiedPostgresUrl(jdbcUrl!!)
+            val secureUrl = verifiedPostgresUrl(jdbcPostgresUrl(jdbcUrl!!))
             sqlite = null
             pool = HikariDataSource(HikariConfig().apply {
                 this.jdbcUrl = secureUrl
