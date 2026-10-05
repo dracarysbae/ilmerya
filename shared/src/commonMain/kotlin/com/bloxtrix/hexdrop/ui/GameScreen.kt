@@ -39,7 +39,6 @@ fun GameScreen(vm: HexDropViewModel, preferences: Preferences, onSettings:()->Un
     val sound = LocalSoundEngine.current
     val music = LocalMusicEngine.current
     val haptic = LocalHapticEngine.current
-    var help by remember { mutableStateOf(false) }
     var confirmRestart by remember { mutableStateOf(false) }
     // A turn animates and sounds once; returning from the menu shows the result silently.
     val fresh = remember(s.runId, s.turnKey) { s.turnKey > 0 && vm.claimTurnSound(s.runId, s.turnKey) }
@@ -157,25 +156,51 @@ fun GameScreen(vm: HexDropViewModel, preferences: Preferences, onSettings:()->Un
         val over = s.phase == GamePhase.GameOver
         AlertDialog(onDismissRequest = { if (!over) vm.togglePause() else onBackToMenu() }, containerColor = C.Surface,
             properties = androidx.compose.ui.window.DialogProperties(dismissOnClickOutside = !over),
-            title = { Text(if (over) words("Tahta doldu", "The board is full") else words("Bir nefes arası", "Take a breath"), color = C.TextPrimary, fontWeight = FontWeight.Bold) },
+            title = {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Text(if (over) words("Tahta doldu", "The board is full") else words("Bir nefes arası", "Take a breath"),
+                        color = C.TextPrimary, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+                    if (!over) SettingsChip(words("Ayarlar", "Settings"), onSettings)
+                }
+            },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     if (over && newRecord) Text(words("Yeni rekor!", "New personal best!"), color = C.Gold, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                     Text(words("${s.score} puan · ${s.dropCount} taş\nEn uzun zincir: ${s.bestChain} dalga", "${s.score} points · ${s.dropCount} stones\nBest cascade: ${s.bestChain} waves"), color = C.TextDim, lineHeight = 24.sp)
-                    if (!over) Action(words("Nasıl oynanır?", "How to play"), { help = true }, Modifier.fillMaxWidth())
-                    if (!over) Action(words("Ayarlar", "Settings"), onSettings, Modifier.fillMaxWidth())
+                    if (!over) Action(words("Devam et", "Resume"), { vm.togglePause() }, Modifier.fillMaxWidth(), primary = true)
                     if (over && ranked) Text(words(if(submission=="sending") "Lig sonucu gönderiliyor…" else if(submission=="saved") "Lig sonucu kaydedildi." else if(submission=="rejected") "Sunucu bu sonucu kabul etmedi; hafta veya oyun bileti kapanmış olabilir." else "Sonuç cihazda bekliyor; lig ekranından yeniden dene.",
                         if(submission=="sending") "Submitting ranked result…" else if(submission=="saved") "Ranked result saved." else if(submission=="rejected") "The server rejected this result; the week or run ticket may have expired." else "Result is pending on this device; retry from the league screen."),color=C.Accent)
                     Action(if(ranked) words("Serbest oyuna başla", "Start free play") else words("Yeniden başla", "Play again"), { if (over) vm.restart() else confirmRestart = true }, Modifier.fillMaxWidth(), primary = over)
                     Action(words("Ana menü", "Main menu"), onBackToMenu, Modifier.fillMaxWidth())
                 }
             },
-            confirmButton = { if (!over) TextButton(onClick = { vm.togglePause() }) { Text(words("Devam et", "Resume"), color = C.Accent) } })
+            confirmButton = {})
     }
-    if (help) InfoDialog(words("Nasıl oynanır?", "How to play"), { help = false }) { Rules() }
     if (confirmRestart) AlertDialog(onDismissRequest = { confirmRestart = false }, containerColor = C.Surface,
         title = { Text(words("Bu oyunu yeniden başlat?", "Restart this run?"), color = C.TextPrimary) },
         text = { Text(words("Mevcut tahta sıfırlanır. En iyi puanın korunur.", "Your board will reset. Your best score is saved."), color = C.TextDim) },
         confirmButton = { TextButton(onClick = { confirmRestart = false; vm.restart() }) { Text(words("Yeniden başlat", "Restart"), color = C.Accent) } },
         dismissButton = { TextButton(onClick = { confirmRestart = false }) { Text(words("Vazgeç", "Cancel")) } })
+}
+
+/** Compact settings entry for a dialog's top-right corner: a drawn gear and a small label, 48 dp tall. */
+@Composable
+private fun SettingsChip(label: String, onClick: () -> Unit) {
+    val sound = LocalSoundEngine.current
+    Column(Modifier.clip(RoundedCornerShape(12.dp)).clickable(role = Role.Button, onClickLabel = label) { sound.playButtonPress(); onClick() }
+        .heightIn(min = 48.dp).padding(horizontal = 8.dp, vertical = 4.dp).semantics { contentDescription = label },
+        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+        Canvas(Modifier.size(22.dp)) {
+            val c = center; val r = size.minDimension / 2
+            repeat(8) { i ->
+                val a = i * kotlin.math.PI.toFloat() / 4
+                drawLine(C.TextDim, c + androidx.compose.ui.geometry.Offset(kotlin.math.cos(a), kotlin.math.sin(a)) * r * .55f,
+                    c + androidx.compose.ui.geometry.Offset(kotlin.math.cos(a), kotlin.math.sin(a)) * r * .98f, r * .28f,
+                    androidx.compose.ui.graphics.StrokeCap.Round)
+            }
+            drawCircle(C.TextDim, r * .62f, c)
+            drawCircle(C.Surface, r * .26f, c)
+        }
+        Text(label, color = C.TextDim, fontSize = 10.sp)
+    }
 }

@@ -79,8 +79,10 @@ android {
         debug {
             manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
             buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"ca-app-pub-3940256099942544/1033173712\"")
+            buildConfigField("boolean", "SCREENSHOT_SCENES", "true")
         }
         release {
+            buildConfigField("boolean", "SCREENSHOT_SCENES", "false")
             manifestPlaceholders["admobAppId"] = productionAdmobAppId.get()
             val validatedId = productionInterstitialId.get().takeIf(unitIdPattern::matches).orEmpty()
             buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"$validatedId\"")
@@ -101,6 +103,7 @@ android {
             versionNameSuffix = "-qa"
             manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
             buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"ca-app-pub-3940256099942544/1033173712\"")
+            buildConfigField("boolean", "SCREENSHOT_SCENES", "true")
         }
     }
 }

@@ -70,7 +70,9 @@ class MainActivity : ComponentActivity() {
                 LocalHapticEngine provides hapticEngine,
                 LocalLeague provides session.competition,
             ) {
-                HexDropApp(vm = viewModel, initialPreferences = initial, appVersion = BuildConfig.VERSION_NAME,
+                // adb shell am start -n <package>/com.bloxtrix.hexdrop.MainActivity --es ilmerya.scene board (debug/QA only)
+                val scene = if (BuildConfig.SCREENSHOT_SCENES) intent?.getStringExtra("ilmerya.scene") else null
+                HexDropApp(vm = viewModel, initialPreferences = initial, appVersion = BuildConfig.VERSION_NAME, demoScene = scene,
                     savePreferences = { p -> prefs.edit().putBoolean("turkish", p.turkish)
                         .putBoolean("sound", p.sound).putBoolean("haptics", p.haptics)
                         .putBoolean("music", p.music).putFloat("soundVolume", p.soundVolume).putFloat("musicVolume", p.musicVolume)

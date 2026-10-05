@@ -16,6 +16,9 @@ class GameOverAdGate {
 
     fun beginRun() { callbackToken++; _pending.value = false }
 
+    /** Screenshot scenes only: treat [runId] as already finished without an ad. */
+    fun markCompleted(runId: Long) { handledRun = runId; _pending.value = false; _completedRun.value = runId }
+
     fun showOnce(state: GameState, ads: AdsManager) {
         if (state.phase != GamePhase.GameOver || state.resolving || handledRun == state.runId) return
         handledRun = state.runId

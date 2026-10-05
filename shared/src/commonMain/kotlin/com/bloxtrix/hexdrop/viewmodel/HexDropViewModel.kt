@@ -189,6 +189,7 @@ class HexDropViewModel(
 
     /** Writes the current run; a finished free run is cleared because it cannot be resumed. */
     private fun persist(awaitingSubmission: Boolean = false) {
+        if (demo) return
         val s = _state.value
         if (s.phase == GamePhase.GameOver && !awaitingSubmission) { runStore.save(null); return }
         if (s.dropCount == 0 && ticket == null) { runStore.save(null); return }
@@ -234,5 +235,17 @@ class HexDropViewModel(
         soundedTurn = _state.value.runId to _state.value.turnKey
         persist()
     }
+    /** Debug/QA screenshot scenes: shows [scene] without touching the saved run, ads or the league. */
+    fun showDemo(scene: GameState, startBest: Long = 0) {
+        demo = true
+        settleJob?.cancel(); ticket = null; rankedBag = null; events.clear(); _ranked.value = false
+        val runId = _state.value.runId + 1
+        _state.value = scene.copy(runId = runId)
+        soundedTurn = runId to scene.turnKey
+        soundedGameOver = runId
+        runStartBest = startBest
+        if (scene.phase == GamePhase.GameOver) gameOverAds.markCompleted(runId)
+    }
+    private var demo = false
     fun dispose() = scope.cancel()
 }

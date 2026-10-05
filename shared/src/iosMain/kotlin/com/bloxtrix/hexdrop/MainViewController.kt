@@ -37,7 +37,7 @@ import platform.UIKit.UIViewController
  * [gameCenter] is the Swift GameKit bridge; [apiUrl] is the HTTPS league service (empty disables the league).
  */
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalForeignApi::class)
-class IosGameSession(private val adsManager: AdsManager, gameCenter: GameCenterBridge?, apiUrl: String) {
+class IosGameSession(private val adsManager: AdsManager, gameCenter: GameCenterBridge?, apiUrl: String, private val demoScene: String?) {
     private val defaults = NSUserDefaults.standardUserDefaults
     private val scope = MainScope()
     private val runStore = object : RunStore {
@@ -91,6 +91,7 @@ class IosGameSession(private val adsManager: AdsManager, gameCenter: GameCenterB
                 haptics = savedBoolean("haptics", true),
                 reducedMotion = savedBoolean("reducedMotion", false)),
                 appVersion = version,
+                demoScene = demoScene,
                 savePreferences = { preferences ->
                     defaults.setBool(preferences.turkish, forKey = "ilmerya.turkish")
                     defaults.setBool(preferences.sound, forKey = "ilmerya.sound")

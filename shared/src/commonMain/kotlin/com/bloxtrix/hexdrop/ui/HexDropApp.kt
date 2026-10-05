@@ -25,7 +25,7 @@ private sealed interface StartRequest {
 
 @Composable
 fun HexDropApp(vm: HexDropViewModel, initialPreferences: Preferences = Preferences(), appVersion: String = "",
-    savePreferences: (Preferences) -> Unit = {}) {
+    demoScene: String? = null, savePreferences: (Preferences) -> Unit = {}) {
     var screenName by rememberSaveable { mutableStateOf(Screen.Menu.name) }
     val screen = Screen.valueOf(screenName)
     fun go(next: Screen) { screenName = next.name }
@@ -53,6 +53,16 @@ fun HexDropApp(vm: HexDropViewModel, initialPreferences: Preferences = Preferenc
     }
     fun startLeague() = vm.startLeague { go(Screen.Game) }
     PlatformBackHandler(enabled = screen == Screen.Weekly) { go(Screen.Menu) }
+    // Store screenshots (debug/QA builds pass a scene); never reachable from the release UI.
+    LaunchedEffect(demoScene) {
+        when (demoScene) {
+            "board" -> { vm.showDemo(DemoScenes.board()); go(Screen.Game) }
+            "result" -> { val over = DemoScenes.result(); vm.showDemo(over, startBest = over.score / 2); go(Screen.Game) }
+            "tutorial" -> pendingMode = GameMode.Calm
+            "settings" -> settings = true
+            else -> Unit
+        }
+    }
     MaterialTheme(colorScheme = darkColorScheme(primary = C.Accent, onPrimary = C.OnAccent,
         background = C.Background, onBackground = C.TextPrimary, surface = C.Surface,
         onSurface = C.TextPrimary, surfaceVariant = C.EmptyCell, onSurfaceVariant = C.TextDim,

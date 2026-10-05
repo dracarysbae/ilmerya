@@ -33,7 +33,13 @@ private final class GameHost: ObservableObject {
         // An empty URL keeps the league switched off and says so on the league screen.
         let api = (Bundle.main.object(forInfoDictionaryKey: "IlmeryaLeagueURL") as? String) ?? ""
         let leagueEnabled = api.hasPrefix("https://")
-        session = IosGameSession(adsManager: ads, gameCenter: leagueEnabled ? gameCenter : nil, apiUrl: api)
+        var scene: String? = nil
+        #if DEBUG
+        // Store screenshots: xcrun simctl launch <udid> <bundle> -ilmeryaScene board
+        let arguments = ProcessInfo.processInfo.arguments
+        if let index = arguments.firstIndex(of: "-ilmeryaScene"), index + 1 < arguments.count { scene = arguments[index + 1] }
+        #endif
+        session = IosGameSession(adsManager: ads, gameCenter: leagueEnabled ? gameCenter : nil, apiUrl: api, demoScene: scene)
         if leagueEnabled { gameCenter.installHandler() }
     }
 
