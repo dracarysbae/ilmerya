@@ -101,7 +101,9 @@ fun GameScreen(vm: HexDropViewModel, preferences: Preferences, onSettings:()->Un
             }
             Box(Modifier.fillMaxWidth().height(25.dp), contentAlignment = Alignment.Center) {
                 val status = when {
-                    s.grid.isGameOver() -> words("Tahta dolu. Devir ile bir çıkış bul!", "Board full. Use Cycle to find a way out!")
+                    s.phase == GamePhase.GameOver -> words("Oyun bitti", "Game over")
+                    s.grid.isGameOver() && !canCycle(s) -> words("Tahta dolu. Devir için çevrilebilen başka bir sütun seç.", "Board full. Select another column that can Cycle.")
+                    s.grid.isGameOver() -> words("Tahta dolu. Devir ile yer aç; Devir hakkın bitince oyun biter.", "Board full. Cycle to make room; the game ends when no Cycle is left.")
                     s.lastChains > 1 -> words("${s.lastChains} DALGALI ZİNCİR  +${s.lastGain}", "${s.lastChains}-WAVE CASCADE  +${s.lastGain}")
                     s.lastChains == 1 -> words("BİRLEŞME  +${s.lastGain}  ·  +1 ENERJİ", "FUSION  +${s.lastGain}  ·  +1 ENERGY")
                     else -> words("Aynı sayıdaki 3 komşu taşı buluştur.", "Connect 3 neighbouring stones of equal value.")
@@ -143,7 +145,8 @@ fun GameScreen(vm: HexDropViewModel, preferences: Preferences, onSettings:()->Un
                 Text(when { preview == null -> words("Sütun dolu", "Column full"); preferences.preview && preview.chains > 0 -> words("Önizleme: +${preview.score}", "Preview: +${preview.score}"); else -> words("Sütun ${s.currentCol + 1}", "Column ${s.currentCol + 1}") }, color = C.TextDim, fontSize = 11.sp)
             }
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Action(words("↻  Devir · 3", "↻  Cycle · 3"), { vm.cycle() }, Modifier.weight(1f), enabled = playable && canCycle(s))
+                Action(words("↻  Devir · 3", "↻  Cycle · 3"), { vm.cycle() }, Modifier.weight(1f), enabled = playable && canCycle(s),
+                    highlight = playable && canCycle(s) && s.grid.isGameOver())
                 Action(words("↓  Yerleştir", "↓  Place"), { vm.drop() }, Modifier.weight(1.25f), primary = true, enabled = playable && preview != null)
             }
             Text(words("Yeni torbalar: 2–${s.incomingMaxValue} · Sıradaki üç taşı planla.", "New bags: 2–${s.incomingMaxValue} · Plan for the next three stones."), color = C.TextDim, fontSize = 10.sp, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())

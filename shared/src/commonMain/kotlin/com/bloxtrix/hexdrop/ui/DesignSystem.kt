@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -58,14 +59,23 @@ fun Wordmark(large: Boolean = false) {
 }
 
 @Composable
-fun Action(label: String, onClick: () -> Unit, modifier: Modifier = Modifier, primary: Boolean = false, enabled: Boolean = true) {
+/** [highlight] draws a slow accent pulse around the button, used when it is the only way forward. */
+fun Action(label: String, onClick: () -> Unit, modifier: Modifier = Modifier, primary: Boolean = false, enabled: Boolean = true,
+    highlight: Boolean = false) {
     val sound = com.bloxtrix.hexdrop.audio.LocalSoundEngine.current
     val shape = RoundedCornerShape(18.dp)
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
     val reducedMotion = LocalReducedMotion.current
     val press by animateFloatAsState(if (pressed) 1f else 0f, tween(if (reducedMotion) 0 else 100), label = "ceramicPress")
+    val pulse = if (highlight && !reducedMotion) rememberInfiniteTransition(label = "actionPulse")
+        .animateFloat(0f, 1f, infiniteRepeatable(tween(900, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "pulse").value
+        else if (highlight) 1f else 0f
     Box(modifier.heightIn(min = 52.dp)
+        .drawBehind {
+            if (highlight) drawRoundRect(C.Accent.copy(alpha = .35f + .45f * pulse), cornerRadius = CornerRadius(18.dp.toPx()),
+                style = Stroke((1.5f + 2f * pulse).dp.toPx()))
+        }
         .graphicsLayer { if (!reducedMotion) { translationY = press * 2.dp.toPx(); scaleX = 1f - press * .012f; scaleY = scaleX } }
         .neuSurface(18.dp, recessed = pressed || !enabled,
             color = if (primary && enabled) C.Accent else C.Surface, depth = if (enabled) 4.dp else 2.dp)
