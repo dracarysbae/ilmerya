@@ -1,0 +1,43 @@
+name: iOS store screenshots
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  screenshots:
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.0.1.app/Contents/Developer
+      HOMEBREW_NO_AUTO_UPDATE: '1'
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Tools
+        run: if ! command -v xcodegen >/dev/null; then brew install xcodegen; fi
+      - name: Build the simulator app (Debug: demo scenes, Google test ads)
+        run: |
+          cd iosApp && xcodegen generate && cd ..
+          xcodebuild -project iosApp/Ilmerya.xcodeproj -scheme Ilmerya -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/ios ARCHS=arm64 CODE_SIGNING_ALLOWED=NO build | tail -n 40
+      - name: Capture scenes on the largest iPhone (TR and EN)
+        run: python3 iosApp/Scripts/store_screenshots.py build/ios build/ios-store
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-store-screenshots
+          retention-days: 14
+          path: build/ios-store/
