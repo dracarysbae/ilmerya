@@ -28,7 +28,7 @@ jobs:
           java-version: '21'
       - name: Tools
         run: if ! command -v xcodegen >/dev/null; then brew install xcodegen; fi
-      - name: Build the simulator app (Debug: demo scenes, Google test ads)
+      - name: Build the simulator app (Debug build with demo scenes and Google test ads)
         run: |
           cd iosApp && xcodegen generate && cd ..
           xcodebuild -project iosApp/Ilmerya.xcodeproj -scheme Ilmerya -configuration Debug \
