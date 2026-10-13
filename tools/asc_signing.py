@@ -192,8 +192,11 @@ def p12_secrets():
     pw_path = STORE / "ilmerya-distribution.p12.password"
     password = pw_path.read_text() if pw_path.exists() else secrets.token_urlsafe(24)
     pw_path.write_text(password)
-    p12 = pkcs12.serialize_key_and_certificates(b"Ilmerya Distribution", key, cert, None,
-                                                serialization.BestAvailableEncryption(password.encode()))
+    # macOS `security import` cannot verify AES/SHA-256 PKCS#12 files; use the legacy 3DES + SHA-1 MAC form.
+    legacy = (serialization.PrivateFormat.PKCS12.encryption_builder().kdf_rounds(50000)
+              .key_cert_algorithm(pkcs12.PBES.PBESv1SHA1And3KeyTripleDESCBC).hmac_hash(hashes.SHA1())
+              .build(password.encode()))
+    p12 = pkcs12.serialize_key_and_certificates(b"Ilmerya Distribution", key, cert, None, legacy)
     (STORE / "ilmerya-distribution.p12").write_bytes(p12)
     (STORE / "ilmerya-distribution.json").write_text(json.dumps({"id": c["id"], "name": c["attributes"]["name"]}))
     secret("APPLE_DISTRIBUTION_P12_B64", base64.b64encode(p12).decode())
