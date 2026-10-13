@@ -157,5 +157,49 @@ def profile_secrets():
     secret("ASC_PRIVATE_KEY_B64", base64.b64encode(KEY_FILE.read_bytes()).decode())
 
 
+KEY_PEM, CSR_FILE = STORE / "ilmerya-distribution.key.pem", STORE / "ilmerya-distribution.certSigningRequest"
+
+
+def csr():
+    """Private key + CSR for a web-created Apple Distribution certificate (the API key may not create one).
+    The key stays in %USERPROFILE%\\.ilmerya-signing; only the CSR (public) is printed for upload."""
+    STORE.mkdir(exist_ok=True)
+    if KEY_PEM.exists():
+        key = serialization.load_pem_private_key(KEY_PEM.read_bytes(), None)
+    else:
+        key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+        KEY_PEM.write_bytes(key.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()))
+    request = x509.CertificateSigningRequestBuilder().subject_name(x509.Name([
+        x509.NameAttribute(NameOID.COMMON_NAME, "OzGAMES Ilmerya Distribution"),
+        x509.NameAttribute(NameOID.EMAIL_ADDRESS, "ozgamesstudio24@gmail.com"),
+        x509.NameAttribute(NameOID.COUNTRY_NAME, "TR")])).sign(key, hashes.SHA256())
+    CSR_FILE.write_bytes(request.public_bytes(serialization.Encoding.PEM))
+    print(CSR_FILE.read_text())
+
+
+def p12_secrets():
+    """Finds the distribution certificate matching our private key (read access suffices), packs a
+    password-protected .p12 outside the repository and stores both as GitHub environment secrets."""
+    key = serialization.load_pem_private_key(KEY_PEM.read_bytes(), None)
+    mine = key.public_key().public_bytes(serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo)
+    for c in call("GET", "/certificates", params={"limit": 50})["data"]:
+        cert = x509.load_der_x509_certificate(base64.b64decode(c["attributes"]["certificateContent"]))
+        if cert.public_key().public_bytes(serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo) == mine:
+            break
+    else:
+        sys.exit("no certificate for this key yet")
+    print("certificate:", c["attributes"]["name"], c["attributes"]["certificateType"], c["attributes"]["expirationDate"][:10], c["id"])
+    pw_path = STORE / "ilmerya-distribution.p12.password"
+    password = pw_path.read_text() if pw_path.exists() else secrets.token_urlsafe(24)
+    pw_path.write_text(password)
+    p12 = pkcs12.serialize_key_and_certificates(b"Ilmerya Distribution", key, cert, None,
+                                                serialization.BestAvailableEncryption(password.encode()))
+    (STORE / "ilmerya-distribution.p12").write_bytes(p12)
+    (STORE / "ilmerya-distribution.json").write_text(json.dumps({"id": c["id"], "name": c["attributes"]["name"]}))
+    secret("APPLE_DISTRIBUTION_P12_B64", base64.b64encode(p12).decode())
+    secret("APPLE_DISTRIBUTION_P12_PASSWORD", password)
+
+
 if __name__ == "__main__":
-    {"status": status, "setup": setup, "profile": profile, "profile-secrets": profile_secrets}[sys.argv[1] if len(sys.argv) > 1 else "status"]()
+    {"status": status, "setup": setup, "profile": profile, "profile-secrets": profile_secrets,
+     "csr": csr, "p12-secrets": p12_secrets}[sys.argv[1] if len(sys.argv) > 1 else "status"]()

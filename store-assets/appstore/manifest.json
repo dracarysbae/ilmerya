@@ -1,0 +1,82 @@
+[
+  {
+    "file": "store-assets/appstore/tr/01-board-1320x2868.png",
+    "scene": "board",
+    "title": "Doğal taşlar. Derin strateji.",
+    "subtitle": "Ceviz tablada kendi zincirini kur.",
+    "source": "store-assets/raw/ios-tr/board.png",
+    "bytes": 3118414
+  },
+  {
+    "file": "store-assets/appstore/tr/02-tutorial-1320x2868.png",
+    "scene": "tutorial",
+    "title": "Üç taşı buluştur.",
+    "subtitle": "Birleştir, yükselt, yeni hamleni planla.",
+    "source": "store-assets/raw/ios-tr/tutorial.png",
+    "bytes": 1876579
+  },
+  {
+    "file": "store-assets/appstore/tr/03-menu-1320x2868.png",
+    "scene": "menu",
+    "title": "Kendi ritmini seç.",
+    "subtitle": "Dingin veya Akış: iki farklı oyun.",
+    "source": "store-assets/raw/ios-tr/menu.png",
+    "bytes": 2214461
+  },
+  {
+    "file": "store-assets/appstore/tr/04-result-1320x2868.png",
+    "scene": "result",
+    "title": "Her zincir yeni bir adım.",
+    "subtitle": "Rekorunu kır, yeniden başla.",
+    "source": "store-assets/raw/ios-tr/result.png",
+    "bytes": 2173655
+  },
+  {
+    "file": "store-assets/appstore/tr/05-settings-1320x2868.png",
+    "scene": "settings",
+    "title": "Sana göre ayarla.",
+    "subtitle": "Ses, müzik, titreşim ve hareket azaltma.",
+    "source": "store-assets/raw/ios-tr/settings.png",
+    "bytes": 1790012
+  },
+  {
+    "file": "store-assets/appstore/en/01-board-1320x2868.png",
+    "scene": "board",
+    "title": "Natural stones. Deep strategy.",
+    "subtitle": "Build your cascade on a walnut board.",
+    "source": "store-assets/raw/ios-en/board.png",
+    "bytes": 3120484
+  },
+  {
+    "file": "store-assets/appstore/en/02-tutorial-1320x2868.png",
+    "scene": "tutorial",
+    "title": "Connect three.",
+    "subtitle": "Merge, grow, plan your next move.",
+    "source": "store-assets/raw/ios-en/tutorial.png",
+    "bytes": 1891438
+  },
+  {
+    "file": "store-assets/appstore/en/03-menu-1320x2868.png",
+    "scene": "menu",
+    "title": "Pick your rhythm.",
+    "subtitle": "Calm or Flow: two ways to play.",
+    "source": "store-assets/raw/ios-en/menu.png",
+    "bytes": 2230992
+  },
+  {
+    "file": "store-assets/appstore/en/04-result-1320x2868.png",
+    "scene": "result",
+    "title": "Every cascade is a step up.",
+    "subtitle": "Beat your best, then play again.",
+    "source": "store-assets/raw/ios-en/result.png",
+    "bytes": 2192810
+  },
+  {
+    "file": "store-assets/appstore/en/05-settings-1320x2868.png",
+    "scene": "settings",
+    "title": "Make it yours.",
+    "subtitle": "Sound, music, haptics and reduced motion.",
+    "source": "store-assets/raw/ios-en/settings.png",
+    "bytes": 1805650
+  }
+]
