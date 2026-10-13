@@ -24,13 +24,29 @@ Durumlar ayrı tutulur: kod yazıldı / derlendi / otomatik test edildi / emüla
 
 ## Henüz doğrulanmayanlar / eksikler
 
+### 5 Ekim 2026 — Codex devralma ilerlemesi
+
+- `docs/HANDOFF.md` kuralları okundu; kalan işler 1. maddeden sürdürülüyor.
+- Play Console'a `zuberozcan24@gmail.com` / OzGAMES hesabıyla erişildi. Yerleşik tarayıcıda bu hesap `/u/0/`; devir notundaki Chrome `/u/1/` indeksi bu tarayıcıda geçerli değil.
+- Varsayılan mağaza girişinin TR ve EN metinleri kaydedildi. Yeni AI simge (512×512), öne çıkan görsel (1024×500) ve dört gerçek oyun ekranını içeren AI sunum görseli (1080×1920) yüklendi ve kaydedildi. Console başarı mesajı: “Değişiklik kaydedildi. Yayınlama özeti sayfasından incelemeye gönderin.” **Henüz incelemeye gönderilmedi/yayınlanmadı.**
+- Altı yeni görsel Play Console'da AI ile oluşturulmuş/düzenlenmiş olarak etiketlendi. Oynanış, rehber, menü ve sonuç sırası kullanılıyor. EN metni ayrı; görseller varsayılan TR kaydından kullanılıyor.
+- Kategori Oyun → Bulmaca olarak kaydedildi (inceleme bekleyen değişiklik). İletişim e-postası `ozgamesstudio24@gmail.com` ve web sitesi `https://ilmerya-league.onrender.com` kaydedildi; iletişim formunun yayınlama onayı tamamlandı.
+- Gizlilik politikası URL'si `/privacy`; reklam var; resmi kurum/finans/sağlık özelliği yok beyanları kaydedildi. Reklam kimliği kullanımı ve analiz/reklam/sahtekarlık önleme amaçları kaydedildi. Release birleşik manifestinde `com.google.android.gms.permission.AD_ID` doğrulandı. Bu içerik değişiklikleri henüz incelemeye gönderilmedi.
+- Veri güvenliği formu önizlemeye kadar dolduruldu ve **taslak olarak** kaydedildi: OAuth, HTTPS, `/delete-account`, yaklaşık konum, ad, kullanıcı kimliği, uygulama etkileşimleri, lig oynanış verileri, SDK kilitlenme/teşhis verileri, cihaz kimlikleri. İsteğe bağlı lig verileri ve reklam SDK'sı ayrımı yapıldı; kamuya açık lig sıralaması paylaşım olarak da beyan edildi. Referanslar: Google Mobile Ads Android veri açıklaması, Play Games SDK veri açıklaması ve Play Data Safety tanımları. Hedef kitle tamamlanmadığı için nihai Kaydet düğmesi devre dışı.
+- **Kullanıcı girdisi gereken bağımlılık:** Play Console'un yeni Oturum açma bilgileri formu, incelemecinin kendi hesabını kullanmasını yasaklıyor ve tüm özelliklere erişen inceleme hesabı istiyor. Lig Google Play Oyunlar gerektirdiği için "erişim kısıtı yok" seçilmedi; erişim beyanı kaydedilmedi. Kullanıcıdan ayrılmış test hesabının Console'a kendisi girilmesi istendi; parola sohbetten istenmedi. Hedef kitle formu bu beyan tamamlanana kadar açılmıyor.
+- **Onay bekleyen işlem:** IARC anketi şart kabulünü gerektiriyor. Tarayıcı işlem-anı onay kuralı nedeniyle kullanıcıdan IARC şartlarının kabulü için onay istendi; anket henüz doldurulmadı/kabul edilmedi.
+- Görseller: `store-assets/play/ai/`, `store-assets/play/feature/`, `store-assets/play/screenshots-tr/`. Kaynak gerçek çekimler `store-assets/raw/android-tr/`; oynanış AI ile yeniden çizilmedi. Android sistem çubukları çıkarıldı ve oran korunarak sunum arka planına yerleştirildi.
+- Görsel kontrolü yapıldı; boyut, saydamlık ve dosya sınırları denetlendi. Yeniden üretim: `node tools/compose-store-art.cjs <sharp-içeren-node_modules-yolu>`. `manifest.json` kaynak ve çıktı bilgilerini içerir.
+- Bu değişiklikler oyun ikonu/oynanışı/derleme dosyalarını değiştirmedi; mevcut imzalı AAB korunuyor. Bloxboom kaynaklarına veya servislerine müdahale edilmedi.
+- Sıradaki iş: inceleme hesabı → erişim beyanı → hedef kitle 13+ → Data Safety nihai kayıt; IARC onayı → derecelendirme. Sonra kapalı test. Sonraki önceliklere geçilmedi.
+
 - Gerçek iPhone testi yok. Canlı ligde tamamlanmış bir lig oyununun gönderimi gerçek cihazda henüz denenmedi (sunucu testlerinde HTTP üzerinden doğrulandı).
 - Sesler ölçümle düzeltildi; telefon hoparlörü ve kulaklıkla dinleme testi yapılmadı.
 - Play Games Hizmetleri yayınlanmadı (mağaza girişi tamamlanınca yayınlanacak); o zamana kadar yalnız PGS test kullanıcıları lige girebilir. Game Center tarafı iOS derlemesi bekliyor.
 - Render Free örneği 15 dk boşta kalınca uyur; ilk istek ~50 sn gecikebilir (uygulama zaman aşımı 70 sn).
 - iOS imzası ve TestFlight: profil ve App Store Connect API gizlileri GitHub `apple-distribution` ortamında. Eksik: mevcut dağıtım sertifikasının .p12 dosyası (korumalı klasörde; `tools/set-ios-secrets.ps1` ile kullanıcı ekler).
 - GitHub Actions: özel depo kotası dolduğu için kullanıcı onayıyla depo herkese açıldı (gizli bilgi taraması temiz).
-- AdMob: uygulamalar mağazaya bağlanmadı; `app-ads.txt` lig sunucusunda hazır, alan adı yayında değil. UMP mesajları AdMob'da yayınlanmalı.
-- Gerçek ekran görüntüleri, öne çıkan görsel, içerik derecelendirmesi, Data Safety ve App Privacy formları (taslak: `store-assets/listing.md`).
+- AdMob: uygulamalar mağazaya bağlanmadı; `app-ads.txt` lig sunucusunda hazır, Play web sitesi HTTPS sunucu köküne kaydedildi. Mağaza kaydı henüz incelemeye gönderilmedi. UMP mesajları AdMob'da yayınlanmalı.
+- İçerik derecelendirmesi, erişim ve hedef kitle beyanları ile Data Safety nihai kaydı eksik; App Privacy henüz doldurulmadı (taslak: `store-assets/listing.md`). Play görselleri ve TR/EN metinleri hazır/yüklendi; Apple ekran görüntüleri ayrı hazırlanacak.
 - Play üretim erişimi için 12 testçi × 14 gün kapalı test şartı.
 - Uzun süreli insan oyun testleri ile denge değerlendirmesi.

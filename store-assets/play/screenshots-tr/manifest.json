@@ -1,0 +1,50 @@
+[
+  {
+    "file": "01-board-1080x1920.png",
+    "scene": "board",
+    "title": "Doğal taşlar. Derin strateji.",
+    "subtitle": "Ceviz tablada kendi zincirini kur.",
+    "width": 1080,
+    "height": 1920,
+    "bytes": 3130279,
+    "gameplaySource": "store-assets/raw/android-tr/board.png",
+    "processing": "Android status/navigation bars excluded; remaining capture proportionally resized, never redrawn by AI",
+    "background": "AI-generated walnut, slate and mineral presentation"
+  },
+  {
+    "file": "02-tutorial-1080x1920.png",
+    "scene": "tutorial",
+    "title": "Üç taşı buluştur.",
+    "subtitle": "Birleştir, yükselt, yeni hamleni planla.",
+    "width": 1080,
+    "height": 1920,
+    "bytes": 2078826,
+    "gameplaySource": "store-assets/raw/android-tr/tutorial.png",
+    "processing": "Android status/navigation bars excluded; remaining capture proportionally resized, never redrawn by AI",
+    "background": "AI-generated walnut, slate and mineral presentation"
+  },
+  {
+    "file": "03-menu-1080x1920.png",
+    "scene": "menu",
+    "title": "Kendi ritmini seç.",
+    "subtitle": "Dingin veya Akış. İki farklı oyun deneyimi.",
+    "width": 1080,
+    "height": 1920,
+    "bytes": 2632106,
+    "gameplaySource": "store-assets/raw/android-tr/menu.png",
+    "processing": "Android status/navigation bars excluded; remaining capture proportionally resized, never redrawn by AI",
+    "background": "AI-generated walnut, slate and mineral presentation"
+  },
+  {
+    "file": "04-result-1080x1920.png",
+    "scene": "result",
+    "title": "Her zincir yeni bir adım.",
+    "subtitle": "Skorunu yükselt, bir sonraki oyuna hazırlan.",
+    "width": 1080,
+    "height": 1920,
+    "bytes": 2074941,
+    "gameplaySource": "store-assets/raw/android-tr/result.png",
+    "processing": "Android status/navigation bars excluded; remaining capture proportionally resized, never redrawn by AI",
+    "background": "AI-generated walnut, slate and mineral presentation"
+  }
+]

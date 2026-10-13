@@ -38,11 +38,10 @@ Bu not, işi devralacak ajan (ChatGPT/Codex) içindir. Ayrıntılı kanıtlar: `
 ## Kalan işler (öncelik sırasıyla)
 
 1. **Play Console mağaza kaydı** (hepsi Play Console'da, zuberozcan24):
-   - Ana mağaza girişi TR (varsayılan) + EN: metinler `store-assets/listing.md`; simge `store-assets/icon/ilmerya-play-icon-512.png`.
-   - Öne çıkan görsel 1024×500 (henüz yok, üretilmeli).
-   - Telefon ekran görüntüleri (en az 2, oran ≤ 2:1): `store-assets/raw` altındaki ham görüntülerden 1080×1920 kareler üretilmeli. Debug/QA derlemesinde `adb shell am start -n com.ozgames.ilmerya.qa/com.bloxtrix.hexdrop.MainActivity --es ilmerya.scene board|result|tutorial|settings` demo sahneleri açar.
-   - Uygulama içeriği: gizlilik politikası `https://ilmerya-league.onrender.com/privacy`, reklam var, hedef kitle 13+, içerik derecelendirmesi anketi, Data Safety (taslak `listing.md`), hesap silme URL'si `/delete-account`, devlet/finans/sağlık uygulaması değil.
-   - Kategori: Oyun → Bulmaca; iletişim e-postası ozgamesstudio24@gmail.com.
+   - **Kaydedildi, henüz incelemeye gönderilmedi:** TR + EN metinleri (`store-assets/listing.md`); yeni AI simge `store-assets/play/ai/ilmerya-play-icon-ai-512.png`; öne çıkan görsel `store-assets/play/feature/ilmerya-feature-tr-1024x500.png`; dört gerçek oyun ekranını içeren AI sunum `store-assets/play/screenshots-tr/` (1080×1920). Altı görsel AI etiketiyle kaydedildi. Gerçek oyun ekranları yeniden çizilmedi.
+   - **Kaydedildi:** `/privacy`, reklam var, devlet/finans/sağlık özelliği yok, reklam kimliği kullanımı (analiz/reklam/sahtekarlık önleme), kategori Oyun → Bulmaca. İletişim e-postası ozgamesstudio24@gmail.com ve HTTPS web sitesi kökü kaydedilip iletişim formunda yayınlama onayı tamamlandı.
+   - **Devam edilecek:** erişim beyanı için ayrılmış Google Play Oyunlar inceleme hesabı (kullanıcı bilgileri doğrudan Console'a girmeli; parolayı sohbete isteme). Console incelemecinin kendi hesabını kullanmasına izin vermediğinden erişim kısıtı yok beyanı verilmedi. Hedef kitle 13+ bu bölüm tamamlanınca açılacak. Data Safety önizlemeye kadar doldurulup taslak kaydedildi; hedef kitle sonrası nihai Kaydet yapılmalı.
+   - **Kullanıcı onayı bekliyor:** IARC şartlarının kabulü; anket henüz başlamadı. Onay gelince doğru oyun içeriğiyle derecelendirme anketini tamamla. Tüm beyanlar tamamlandıktan sonra yayın özeti üzerinden incelemeye gönder.
 2. **Kapalı test**: dahili testteki sürümü kapalı teste yükselt; üretim erişimi için 12 testçi × 14 gün şartı var.
 3. **Play Games Hizmetleri'ni yayınla**: mağaza girişi tamamlanınca (Play Console → Play Oyun Hizmetleri → Yayınlama). Yayınlanana kadar yalnız PGS test kullanıcıları lige girebilir.
 4. **AdMob**: iki uygulamayı mağaza kayıtlarına bağla; UMP (GDPR/US) mesajlarını yayınla. `app-ads.txt` şu an sunucuda; AdMob'un okuyabilmesi için mağaza girişindeki "web sitesi" alanı `https://ilmerya-league.onrender.com` olmalı.

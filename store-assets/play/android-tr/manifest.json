@@ -1,0 +1,77 @@
+[
+  {
+    "scene": "board",
+    "source": "store-assets/raw/android-tr/board.png",
+    "sourceSize": [
+      1080,
+      2340
+    ],
+    "output": "board-1080x1920.png",
+    "size": [
+      1080,
+      1920
+    ],
+    "bytes": 1810153,
+    "method": "Proportional resize with anthracite padding; complete real capture preserved"
+  },
+  {
+    "scene": "tutorial",
+    "source": "store-assets/raw/android-tr/tutorial.png",
+    "sourceSize": [
+      1080,
+      2340
+    ],
+    "output": "tutorial-1080x1920.png",
+    "size": [
+      1080,
+      1920
+    ],
+    "bytes": 549574,
+    "method": "Proportional resize with anthracite padding; complete real capture preserved"
+  },
+  {
+    "scene": "result",
+    "source": "store-assets/raw/android-tr/result.png",
+    "sourceSize": [
+      1080,
+      2340
+    ],
+    "output": "result-1080x1920.png",
+    "size": [
+      1080,
+      1920
+    ],
+    "bytes": 554738,
+    "method": "Proportional resize with anthracite padding; complete real capture preserved"
+  },
+  {
+    "scene": "menu",
+    "source": "store-assets/raw/android-tr/menu.png",
+    "sourceSize": [
+      1080,
+      2340
+    ],
+    "output": "menu-1080x1920.png",
+    "size": [
+      1080,
+      1920
+    ],
+    "bytes": 1218757,
+    "method": "Proportional resize with anthracite padding; complete real capture preserved"
+  },
+  {
+    "scene": "settings",
+    "source": "store-assets/raw/android-tr/settings.png",
+    "sourceSize": [
+      1080,
+      2340
+    ],
+    "output": "settings-1080x1920.png",
+    "size": [
+      1080,
+      1920
+    ],
+    "bytes": 283365,
+    "method": "Proportional resize with anthracite padding; complete real capture preserved"
+  }
+]
