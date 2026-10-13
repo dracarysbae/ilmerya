@@ -15,14 +15,16 @@ AI = ROOT / "store-assets/ai-oz"
 BRAND = {"tr": "İLMERYA", "en": "ILMERYA"}
 SHOTS = {
     "tr": [("board", "hero", "Doğal taşlar. Derin strateji.", "Senior Oz ile ceviz tablada zincir kur."),
-           ("tutorial", "plain", "Üç taşı buluştur.", "Birleştir, yükselt, yeni hamleni planla."),
+           ("cheer", "plain", "Senior Oz seninle kutlar.", "Uzun zincirler, büyük taşlar, yeni rekorlar."),
            ("menu", "plain", "Kendi ritmini seç.", "Dingin veya Akış: iki farklı oyun."),
-           ("result", "celebrate", "Her zincir yeni bir adım.", "Rekorunu kır, yeniden başla."),
+           ("tutorial", "plain", "Üç taşı buluştur.", "Birleştir, yükselt, yeni hamleni planla."),
+           ("result", "plain", "Her zincir yeni bir adım.", "Rekorunu kır, yeniden başla."),
            ("settings", "plain", "Sana göre ayarla.", "Ses, müzik, titreşim ve hareket azaltma.")],
     "en": [("board", "hero", "Natural stones. Deep strategy.", "Build cascades with Senior Oz."),
-           ("tutorial", "plain", "Connect three.", "Merge, grow, plan your next move."),
+           ("cheer", "plain", "Senior Oz cheers you on.", "Long cascades, big stones, new bests."),
            ("menu", "plain", "Pick your rhythm.", "Calm or Flow: two ways to play."),
-           ("result", "celebrate", "Every cascade is a step up.", "Beat your best, then play again."),
+           ("tutorial", "plain", "Connect three.", "Merge, grow, plan your next move."),
+           ("result", "plain", "Every cascade is a step up.", "Beat your best, then play again."),
            ("settings", "plain", "Make it yours.", "Sound, music, haptics and reduced motion.")],
 }
 FEATURE = {"tr": ("TAŞ BİRLEŞTİRME", "Ceviz tablada doğal taşlar"), "en": ("STONE MERGE PUZZLE", "Natural stones on a walnut board")}

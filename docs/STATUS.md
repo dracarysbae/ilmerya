@@ -22,6 +22,13 @@ Durumlar ayrı tutulur: kod yazıldı / derlendi / otomatik test edildi / emüla
 | Google Play dahili test | 1.0.0 (versionCode 1) AAB yüklendi ve dahili test kanalında yayınlandı; "Ilmerya testers" listesi (4 hesap); katılım: https://play.google.com/apps/internaltest/4701736684417648322 |
 | Küçük ekran | 360×640 dp: tüm pencereler kaydırmasız sığıyor, dış dokunuşla kapanıyor; kompakt oyun düzeni; CI'da Nexus 5 emülatörü |
 
+
+### 13 Ekim 2026 — Claude: mağaza ve Senior Oz
+
+- **Google Play:** İçerik derecelendirmesi tamamlandı (IARC: PEGI 3, ESRB Tüm yaşlar, USK Tüm yaşlar). Kapalı test (Alpha) kanalı: 177 ülke, "Ilmerya testers" listesi, geri bildirim ozgamesstudio24@gmail.com, sürüm 1.0.0 (1) ve TR/EN notlar kaydedildi; **incelemeye gönderilmedi**. Engel: "Oturum açma bilgileri" beyanı için Google, ligdeki Google Play Oyunlar girişi yüzünden ayrı bir inceleme hesabı istiyor (kullanıcı açacak ve parolayı kendisi girecek). Hedef kitle ve veri güvenliği nihai kaydı bu beyana bağlı. Mağaza açıklamalarına (TR/EN) Senior Oz satırı eklendi (taslak kayıt).
+- **App Store:** Yeni İlmerya Apple Distribution sertifikası (3WGDMHC358, 13.10.2027) web'den CSR ile oluşturuldu, özel anahtar `%USERPROFILE%\.ilmerya-signing` ve GitHub `apple-distribution` ortamında; "Ilmerya App Store" profili bu sertifikayla yenilendi. TestFlight: **build 1 yüklendi ve işlendi (VALID)**; build 2 (Senior Oz) derleniyor. ASC (iris oturumu): TR/EN ad, alt başlık, açıklama, anahtar kelimeler, destek/pazarlama/gizlilik URL'leri, kategori Oyunlar › Bulmaca + Masa, ücretsiz fiyat, 174 bölge (Çin anakarası kapalı: oyun onay numarası gerekir), yaş derecelendirmesi, içerik hakları, Game Center (detay + sürüm), App Privacy yayınlandı, 6,9" TR/EN 5'er ekran görüntüsü yüklendi, sürüm 1.0.0, dahili TestFlight grubu "OzGAMES ekip" + hesap sahibi davet edildi. Eksik: App Review iletişim telefonu (kullanıcıdan), build seçimi ve incelemeye gönderme.
+- **Senior Oz (OzGAMES maskotu):** Bloxboom'daki onaylı karakter referansından Codex görsel üretimiyle (ChatGPT aboneliği) üç poz (taşlarla, işaret eden, sevinen) ve Play öne çıkan görsel sahnesi üretildi (`store-assets/ai-oz`). Oyunda: ana menüde taş halkasını gösteren Oz (nefes alma animasyonu), 3+ dalgalı zincirde / 128+ yeni taşta / oyun içinde rekor geçilince köşeden çıkan kutlama (parıltılar, balon; dokunmayı engellemez), sonuç penceresinde rekor kutlaması, haftalık ligde Oz. "Hareketi azalt" açıkken animasyonsuz. 360×640 dp emülatörde doğrulandı. Mağaza görselleri Oz ile yeniden kuruldu (`tools/compose_store_oz.py`).
+
 ## Henüz doğrulanmayanlar / eksikler
 
 ### 5 Ekim 2026 — Codex devralma ilerlemesi
