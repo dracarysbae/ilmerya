@@ -21,7 +21,7 @@ import com.bloxtrix.hexdrop.ui.theme.HexColors as C
 import com.bloxtrix.hexdrop.viewmodel.HexDropViewModel
 
 @Composable
-fun GameScreen(vm: HexDropViewModel, preferences: Preferences, onSettings:()->Unit, onBackToMenu: () -> Unit) {
+fun GameScreen(vm: HexDropViewModel, preferences: Preferences, onSettings:()->Unit, demoCheer: Boolean = false, onBackToMenu: () -> Unit) {
     val reducedMotion = preferences.reducedMotion
     val s by vm.state.collectAsState()
     val ranked by vm.ranked.collectAsState()
@@ -42,6 +42,15 @@ fun GameScreen(vm: HexDropViewModel, preferences: Preferences, onSettings:()->Un
     var confirmRestart by remember { mutableStateOf(false) }
     // A turn animates and sounds once; returning from the menu shows the result silently.
     val fresh = remember(s.runId, s.turnKey) { s.turnKey > 0 && vm.claimTurnSound(s.runId, s.turnKey) }
+    // Senior Oz cheers for long cascades, new big stones and beating the personal best mid-run.
+    var cheer by remember { mutableStateOf<OzCheer?>(null) }
+    var cheerCount by remember { mutableStateOf(0L) }
+    fun celebrate(text: String) { cheerCount++; cheer = OzCheer(cheerCount, text) }
+    val turkish = LocalTurkish.current
+    fun say(tr: String, en: String) = if (turkish) tr else en
+    var biggestCheered by remember(s.runId) { mutableStateOf(64) }
+    // Store screenshot scene (debug/QA only): Oz stays on screen cheering a cascade.
+    LaunchedEffect(demoCheer) { if (demoCheer) { kotlinx.coroutines.delay(500); cheerCount++; cheer = OzCheer(cheerCount, say("3 dalgalı zincir!", "3-wave cascade!"), holdMs = 600_000) } }
     val boardEvent: (BoardEvent) -> Unit = { event ->
         when (event) {
             BoardEvent.Landed -> { sound.playLand(false); haptic.impact(HapticStyle.LIGHT) }
@@ -51,11 +60,22 @@ fun GameScreen(vm: HexDropViewModel, preferences: Preferences, onSettings:()->Un
                 music.triggerMergeAccent()
                 if (event.index >= 1) { sound.playChainLink(event.index + 1); music.triggerChainAccent(event.index + 1) }
                 haptic.impact(if (event.index >= 1) HapticStyle.HEAVY else HapticStyle.MEDIUM)
+                if (top > biggestCheered) {
+                    biggestCheered = top
+                    celebrate(say("$top! Muhteşem taş", "$top! What a stone"))
+                } else if (event.index >= 2) celebrate(say("${event.index + 1} dalgalı zincir!", "${event.index + 1}-wave cascade!"))
             }
         }
     }
     // A record is a finished run that set the best score; the best is updated as the run is played.
     val newRecord = s.score > 0 && s.score > vm.runStartBest
+    var lastScore by remember(s.runId) { mutableStateOf(s.score) }
+    LaunchedEffect(s.score, animating) {
+        if (animating) return@LaunchedEffect
+        val best = vm.runStartBest
+        if (best > 0 && lastScore <= best && s.score > best && s.phase != GamePhase.GameOver) celebrate(say("Yeni rekor!", "New best!"))
+        lastScore = s.score
+    }
     LaunchedEffect(s.phase, animating) {
         if (s.phase == GamePhase.GameOver) { music.stop(); if (!animating && vm.claimGameOverSound(s.runId)) { if (newRecord) sound.playNewHighScore() else sound.playGameOver() } }
         else if (s.phase == GamePhase.Playing) music.start() else music.stop()
@@ -133,11 +153,14 @@ fun GameScreen(vm: HexDropViewModel, preferences: Preferences, onSettings:()->Un
                     modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
             }
             BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Box(Modifier.width(minOf(maxWidth, maxHeight * .64f + 12.dp)).fillMaxHeight().carvedTray(materials?.walnut)) {
+                val trayWidth = minOf(maxWidth, maxHeight * .64f + 12.dp)
+                Box(Modifier.width(trayWidth).fillMaxHeight().carvedTray(materials?.walnut)) {
                     HexBoard(s, reducedMotion, fresh, { if (playable) { vm.selectColumn(it); sound.playMove() } },
                         boardEvent, { animating = it },
                         Modifier.fillMaxSize().padding(start = 14.dp, end = 14.dp, top = 16.dp, bottom = 12.dp))
                 }
+                OzCelebration(cheer, reducedMotion, Modifier.align(Alignment.BottomStart).offset(x = (-4).dp, y = 10.dp),
+                    size = (trayWidth * .46f).coerceIn(84.dp, 150.dp))
             }
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                 repeat(COLS) { col ->
@@ -180,7 +203,10 @@ fun GameScreen(vm: HexDropViewModel, preferences: Preferences, onSettings:()->Un
         IlmeryaDialog(if (over) words("Tahta doldu", "The board is full") else words("Bir nefes arası", "Take a breath"),
             onDismiss = { if (!over) vm.togglePause() else onBackToMenu() },
             corner = if (!over) ({ SettingsChip(words("Ayarlar", "Settings"), onSettings) }) else null) {
-            if (over && newRecord) Text(words("Yeni rekor!", "New personal best!"), color = C.Gold, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            if (over && newRecord) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                SeniorOz(OzPose.Cheer, reducedMotion, Modifier.height(72.dp))
+                Text(words("Yeni rekor!", "New personal best!"), color = C.Gold, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            }
             Text(words("${s.score} puan · ${s.dropCount} taş\nEn uzun zincir: ${s.bestChain} dalga", "${s.score} points · ${s.dropCount} stones\nBest cascade: ${s.bestChain} waves"), color = C.TextDim, lineHeight = 24.sp)
             if (!over) Action(words("Devam et", "Resume"), { vm.togglePause() }, Modifier.fillMaxWidth(), primary = true)
             if (over && ranked) Text(words(if(submission=="sending") "Lig sonucu gönderiliyor…" else if(submission=="saved") "Lig sonucu kaydedildi." else if(submission=="rejected") "Sunucu bu sonucu kabul etmedi; hafta veya oyun bileti kapanmış olabilir." else "Sonuç cihazda bekliyor; lig ekranından yeniden dene.",

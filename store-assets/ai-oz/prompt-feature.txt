@@ -1,0 +1,11 @@
+Use your built-in image generation tool to create ONE image, then save it in this folder as feature-scene.png. Do not run any other commands.
+
+Attached image 1 is our approved mascot "Senior Oz" holding Ilmerya stones; keep his identity exactly (coral-red baby dragon, round thin gold glasses, cream eyebrows/belly/horns, purple eyes and wing membranes, gold necklace with turquoise pendant, turquoise earring, same soft 3D animated-film rendering).
+Attached image 2 is the Ilmerya game board: a carved walnut board with hexagonal sockets holding opaque natural mineral hexagon stones (malachite, turquoise with dark veins, lapis lazuli, red jasper, charoite, rhodonite), each stone has a cream number engraved (2, 4, 8, 16, 32, 64).
+
+Create a WIDE landscape promotional scene (about 2:1), premium and calm, for a Google Play feature graphic:
+- Right half: a large carved walnut hexagonal board seen at a slight angle, several opaque mineral hex stones resting in the sockets with clean cream numbers 2, 4, 8, 16, 32 (numbers must be crisp and correct), soft warm light.
+- Right-center, in front of the board: Senior Oz, full body, happily placing a malachite hex stone into a socket.
+- Left 45% of the image: calm dark anthracite slate background with subtle depth and a faint turquoise glow, completely EMPTY so a title can be added later.
+- Absolutely no letters, words, logos or watermarks anywhere except the stone numbers.
+- Stones are OPAQUE natural minerals, NOT glass, NOT glowing crystals.

@@ -1,0 +1,135 @@
+{
+  "note": "Senior Oz artwork AI-generated (Codex image_gen) from the approved Bloxboom character reference; gameplay captures unchanged.",
+  "screenshots": [
+    {
+      "file": "store-assets/appstore/tr/01-board-1320x2868.png",
+      "scene": "board",
+      "layout": "hero",
+      "bytes": 3679919
+    },
+    {
+      "file": "store-assets/appstore/tr/02-tutorial-1320x2868.png",
+      "scene": "tutorial",
+      "layout": "plain",
+      "bytes": 1879529
+    },
+    {
+      "file": "store-assets/appstore/tr/03-menu-1320x2868.png",
+      "scene": "menu",
+      "layout": "plain",
+      "bytes": 2215257
+    },
+    {
+      "file": "store-assets/appstore/tr/04-result-1320x2868.png",
+      "scene": "result",
+      "layout": "celebrate",
+      "bytes": 2404931
+    },
+    {
+      "file": "store-assets/appstore/tr/05-settings-1320x2868.png",
+      "scene": "settings",
+      "layout": "plain",
+      "bytes": 1792398
+    },
+    {
+      "file": "store-assets/appstore/en/01-board-1320x2868.png",
+      "scene": "board",
+      "layout": "hero",
+      "bytes": 3679091
+    },
+    {
+      "file": "store-assets/appstore/en/02-tutorial-1320x2868.png",
+      "scene": "tutorial",
+      "layout": "plain",
+      "bytes": 1893535
+    },
+    {
+      "file": "store-assets/appstore/en/03-menu-1320x2868.png",
+      "scene": "menu",
+      "layout": "plain",
+      "bytes": 2232044
+    },
+    {
+      "file": "store-assets/appstore/en/04-result-1320x2868.png",
+      "scene": "result",
+      "layout": "celebrate",
+      "bytes": 2423786
+    },
+    {
+      "file": "store-assets/appstore/en/05-settings-1320x2868.png",
+      "scene": "settings",
+      "layout": "plain",
+      "bytes": 1807509
+    },
+    {
+      "file": "store-assets/play/screenshots-tr/01-board-1080x1920.png",
+      "scene": "board",
+      "layout": "hero",
+      "bytes": 2446845
+    },
+    {
+      "file": "store-assets/play/screenshots-tr/02-tutorial-1080x1920.png",
+      "scene": "tutorial",
+      "layout": "plain",
+      "bytes": 1546142
+    },
+    {
+      "file": "store-assets/play/screenshots-tr/03-menu-1080x1920.png",
+      "scene": "menu",
+      "layout": "plain",
+      "bytes": 1734311
+    },
+    {
+      "file": "store-assets/play/screenshots-tr/04-result-1080x1920.png",
+      "scene": "result",
+      "layout": "celebrate",
+      "bytes": 1839805
+    },
+    {
+      "file": "store-assets/play/screenshots-tr/05-settings-1080x1920.png",
+      "scene": "settings",
+      "layout": "plain",
+      "bytes": 1500352
+    },
+    {
+      "file": "store-assets/play/screenshots-en/01-board-1080x1920.png",
+      "scene": "board",
+      "layout": "hero",
+      "bytes": 2444509
+    },
+    {
+      "file": "store-assets/play/screenshots-en/02-tutorial-1080x1920.png",
+      "scene": "tutorial",
+      "layout": "plain",
+      "bytes": 1559365
+    },
+    {
+      "file": "store-assets/play/screenshots-en/03-menu-1080x1920.png",
+      "scene": "menu",
+      "layout": "plain",
+      "bytes": 1745138
+    },
+    {
+      "file": "store-assets/play/screenshots-en/04-result-1080x1920.png",
+      "scene": "result",
+      "layout": "celebrate",
+      "bytes": 1852084
+    },
+    {
+      "file": "store-assets/play/screenshots-en/05-settings-1080x1920.png",
+      "scene": "settings",
+      "layout": "plain",
+      "bytes": 1509635
+    }
+  ],
+  "feature": [
+    {
+      "file": "store-assets/play/feature/ilmerya-feature-oz-tr-1024x500.png",
+      "bytes": 697223
+    },
+    {
+      "file": "store-assets/play/feature/ilmerya-feature-oz-en-1024x500.png",
+      "bytes": 697891
+    }
+  ]
+}

@@ -10,7 +10,7 @@ import kotlin.random.Random
  * played by the engine with a one-step greedy policy, so every screen is a reachable game state.
  */
 object DemoScenes {
-    val names = listOf("menu", "board", "tutorial", "result", "settings")
+    val names = listOf("menu", "board", "tutorial", "result", "settings", "cheer")
 
     private fun greedy(state: GameState): String {
         var best: String? = null; var bestScore = Long.MIN_VALUE

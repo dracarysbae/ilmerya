@@ -17,6 +17,7 @@ Privacy: https://ilmerya-league.onrender.com/privacy · Support: https://ilmerya
 • Devir: 3 enerji harcayıp seçili sütunun en alttaki taşını en üste taşı. Sıradaki taşın değişmez; tahta dolu olsa bile doğru Devir hamlesiyle oyun sürer.
 • Dingin modunda süre yoktur. Akış modunda taşlar ritimle kendiliğinden düşer ve tempo giderek artar.
 • Haftalık lig (isteğe bağlı): Haftanın en iyi Dingin lig oyunun sıralamaya girer. Skorlar hamlelerin sunucuda yeniden oynatılmasıyla doğrulanır. Hafta her pazartesi 00.00'da (Türkiye saati) kapanır.
+• Senior Oz, OzGAMES'in bilge küçük ejderhası, uzun zincirlerini, büyük taşlarını ve rekorlarını seninle kutlar.
 • Malakit, kırmızı jasper, turkuaz, çaroit, lapis ve daha fazlası: her değerin kendine ait opak mineral dokusu vardır.
 • Özgün müzik ve taş sesleri; müzik, efekt, titreşim ve hareket azaltma için ayrı ayarlar.
 • Türkçe ve İngilizce.
@@ -36,6 +37,7 @@ Ilmerya is a calm yet deep merge puzzle played in hexagonal sockets carved into 
 • Cycle: spend 3 energy to lift the bottom stone of the selected column to the top. Your next stone stays the same, and even a full board plays on while a Cycle can save it.
 • Calm mode has no timer. In Flow mode stones drop on a beat that slowly quickens.
 • Weekly league (optional): your best Calm ranked run of the week enters the standings. Scores are verified by replaying your moves on the server. Each week closes on Monday at 00:00 Türkiye time.
+• Senior Oz, the wise little OzGAMES dragon, cheers your long cascades, big stones and personal bests.
 • Malachite, red jasper, turquoise, charoite, lapis and more: every value has its own opaque mineral texture.
 • Original music and stone sounds, with separate music, effects, haptics and reduced-motion settings.
 • Turkish and English.

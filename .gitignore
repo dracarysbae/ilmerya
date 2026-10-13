@@ -30,3 +30,4 @@ iosApp/*.xcodeproj/
 iosApp/DerivedData/
 xcuserdata/
 data/
+store-assets/ai-oz/*.log

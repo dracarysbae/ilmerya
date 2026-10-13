@@ -1,0 +1,8 @@
+Use your built-in image generation tool to create ONE image, then save it in this folder as oz-stones.png. Do not run any other commands.
+
+Attached image 1 is the canonical character "Senior Oz" (OzGAMES mascot). Preserve his identity exactly: cute wise coral-red baby dragon, round thin gold glasses, cream eyebrows, cream belly and cream curved horns, purple eyes, purple wing membranes, small gold necklace with a turquoise diamond pendant, turquoise earring on the left horn, diamond-tipped tail, same soft 3D animated-film rendering and proportions.
+Attached image 2 is the game Ilmerya: a hexagonal merge puzzle with opaque natural mineral stones (malachite green with bands, turquoise with dark matrix veins, lapis lazuli deep blue with gold flecks, red jasper, charoite purple, rhodonite pink) set in a carved walnut board.
+
+New pose for Ilmerya: Senior Oz stands three-quarter view, smiling warmly, proudly holding up with both paws ONE large flat hexagonal polished malachite stone (opaque, natural green banded mineral, softly bevelled edges like a game piece, no numbers, no text). Two smaller hexagonal stones float beside him: one turquoise with dark veins, one deep blue lapis lazuli. The stones are OPAQUE natural minerals, NOT glass, NOT glowing crystals, NOT transparent; only a soft natural sheen.
+Background: fully TRANSPARENT (PNG with alpha), no floor, no shadow plate, no frame, no text, no logo, no watermark.
+Square canvas, character centered with generous margin, full body visible. Premium, calm, warm lighting.

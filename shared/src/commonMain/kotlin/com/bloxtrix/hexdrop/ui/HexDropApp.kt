@@ -56,7 +56,7 @@ fun HexDropApp(vm: HexDropViewModel, initialPreferences: Preferences = Preferenc
     // Store screenshots (debug/QA builds pass a scene); never reachable from the release UI.
     LaunchedEffect(demoScene) {
         when (demoScene) {
-            "board" -> { vm.showDemo(DemoScenes.board()); go(Screen.Game) }
+            "board", "cheer" -> { vm.showDemo(DemoScenes.board()); go(Screen.Game) }
             "result" -> { val over = DemoScenes.result(); vm.showDemo(over, startBest = over.score / 2); go(Screen.Game) }
             "tutorial" -> pendingMode = GameMode.Calm
             "settings" -> settings = true
@@ -74,7 +74,7 @@ fun HexDropApp(vm: HexDropViewModel, initialPreferences: Preferences = Preferenc
         ) {
             when (screen) {
                 Screen.Weekly -> WeeklyScreen(starting, { if (canResume) replace = StartRequest.League else startLeague() }, { go(Screen.Menu) })
-                Screen.Game -> GameScreen(vm, preferences, { settings = true }) { vm.pause(); go(Screen.Menu) }
+                Screen.Game -> GameScreen(vm, preferences, { settings = true }, demoCheer = demoScene == "cheer") { vm.pause(); go(Screen.Menu) }
                 Screen.Menu -> MenuScreen(state.highScore, preferences.reducedMotion,
                     { mode -> if (canResume) replace = StartRequest.Free(mode) else startFree(mode) },
                     { settings = true }, { go(Screen.Weekly) },

@@ -1,0 +1,5 @@
+Use your built-in image generation tool to create ONE image, then save it in this folder as oz-point.png. Do not run any other commands.
+
+Attached image is our approved mascot "Senior Oz" with Ilmerya mineral stones; keep his identity exactly (coral-red baby dragon, round thin gold glasses, cream eyebrows/belly/horns, purple eyes and wing membranes, gold necklace with turquoise pendant, turquoise earring on the horn, diamond-tipped tail, same soft 3D animated-film rendering and proportions).
+New pose: Senior Oz sitting cross-legged, cheerful and wise, one paw raised pointing up and to the RIGHT as if presenting something next to him, the other paw holding a small opaque hexagonal turquoise stone with dark veins (natural mineral, NOT glass, no text).
+Background fully TRANSPARENT (PNG with alpha). No floor, no shadow plate, no text, no logo. Square canvas, full body, generous margins.

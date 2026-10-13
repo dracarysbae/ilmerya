@@ -39,8 +39,13 @@ import kotlin.time.TimeSource
                 TextButton(onClick = { scope.launch { league.refresh() } }, modifier = Modifier.heightIn(min = 48.dp),
                     enabled = league.configured && !state.loading && !state.loginRequired) { Text(words("Yenile", "Refresh")) }
             }
-            SmallLabel(words("AYNI KURALLAR. GERÇEK OYUNCULAR.", "SAME RULES. REAL PLAYERS."))
-            Text(words("Haftalık lig", "Weekly league"), color = C.TextPrimary, fontSize = 32.sp, fontWeight = FontWeight.Bold)
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    SmallLabel(words("AYNI KURALLAR. GERÇEK OYUNCULAR.", "SAME RULES. REAL PLAYERS."))
+                    Text(words("Haftalık lig", "Weekly league"), color = C.TextPrimary, fontSize = 32.sp, fontWeight = FontWeight.Bold)
+                }
+                SeniorOz(OzPose.Stones, LocalReducedMotion.current, Modifier.height(96.dp))
+            }
             Text(words("Haftanın en iyi Dingin lig oyunun sıralamaya girer. Skorlar, hamlelerin sunucuda yeniden oynatılmasıyla doğrulanır.",
                 "Your best Calm ranked run of the week enters the standings. The server verifies every score by replaying your moves."), color = C.TextDim, fontSize = 14.sp)
             if (league.configured && !state.loginRequired) Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {

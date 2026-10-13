@@ -25,7 +25,7 @@ for lang, locale in (("tr", "tr_TR"), ("en", "en_US")):
     subprocess.run(["xcrun", "simctl", "uninstall", udid, bundle], check=False)
     subprocess.check_call(["xcrun", "simctl", "install", udid, str(app)])
     (out / lang).mkdir(exist_ok=True)
-    for scene in ("menu", "board", "tutorial", "result", "settings"):
+    for scene in ("menu", "board", "cheer", "tutorial", "result", "settings"):
         subprocess.check_output(["xcrun", "simctl", "launch", "--terminate-running-process", udid, bundle,
                                  "-AppleLanguages", f"({lang})", "-AppleLocale", locale, "-ilmeryaScene", scene], text=True)
         time.sleep(9)

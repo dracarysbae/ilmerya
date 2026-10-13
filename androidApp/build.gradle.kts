@@ -48,7 +48,7 @@ android {
         applicationId = "com.ozgames.ilmerya"
         minSdk        = 26
         targetSdk     = 36
-        versionCode   = 1
+        versionCode   = 2
         versionName   = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         val api = providers.gradleProperty("ILMERYA_API_URL").orElse("").get()

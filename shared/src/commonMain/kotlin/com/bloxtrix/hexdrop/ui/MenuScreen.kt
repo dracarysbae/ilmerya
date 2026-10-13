@@ -29,7 +29,9 @@ fun MenuScreen(highScore: Long, reducedMotion: Boolean, onPlay: (GameMode) -> Un
             .verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 14.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                Column { SmallLabel(words("EN İYİ", "PERSONAL BEST")); Text("$highScore", color = C.Gold, fontSize = 22.sp, fontWeight = FontWeight.Bold) }
+                // A first-time player has no best yet; the corner stays quiet until there is one.
+                if (highScore > 0) Column { SmallLabel(words("EN İYİ", "PERSONAL BEST")); Text("$highScore", color = C.Gold, fontSize = 22.sp, fontWeight = FontWeight.Bold) }
+                else Spacer(Modifier.width(1.dp))
                 Action(words("Ayarlar", "Settings"), onSettings)
             }
             Spacer(Modifier.height(28.dp))
@@ -38,9 +40,14 @@ fun MenuScreen(highScore: Long, reducedMotion: Boolean, onPlay: (GameMode) -> Un
             Wordmark(large = true)
             Text(words("Birleştir. Çevir. Akışı değiştir.", "Connect. Cycle. Change the flow."), color = C.TextDim, fontSize = 14.sp, modifier = Modifier.padding(top = 8.dp))
             val measure = rememberTextMeasurer()
-            Canvas(Modifier.fillMaxWidth().height(215.dp)) {
+            BoxWithConstraints(Modifier.fillMaxWidth().height(215.dp)) {
+            // Senior Oz fills the space left of the ring; on narrow phones he shrinks rather than cover stones.
+            val ringR = minOf(maxWidth / 7.8f, maxHeight / 5.8f)
+            val ozHeight = ((maxWidth * .58f - ringR * 2.7f + 16.dp) / .81f).coerceIn(104.dp, 172.dp)
+            Canvas(Modifier.matchParentSize()) {
                 val r = min(size.width / 7.8f, size.height / 5.8f)
-                val center = Offset(size.width / 2, size.height / 2)
+                // The stone ring sits right of centre so Senior Oz can present it from the left.
+                val center = Offset(size.width * .58f, size.height / 2)
                 val tray = Path().apply { addOval(androidx.compose.ui.geometry.Rect(center - Offset(r * 2.7f, r * 2.7f), center + Offset(r * 2.7f, r * 2.7f))) }
                 softShape(tray, C.Board, 7.dp.toPx(), recessed = true)
                 if (materials != null) {
@@ -65,6 +72,8 @@ fun MenuScreen(highScore: Long, reducedMotion: Boolean, onPlay: (GameMode) -> Un
                     drawHexCell(p.x, p.y, r * .83f, listOf(2, 4, 8, 16, 32, 64)[i], measure, materials = materials, textureVariant = i)
                 }
                 drawHexCell(center.x, center.y, r * 1.02f, 2, measure, materials = materials)
+            }
+            SeniorOz(OzPose.Point, reducedMotion, Modifier.align(Alignment.BottomStart).offset(x = (-8).dp).height(ozHeight))
             }
             Row(Modifier.fillMaxWidth().neuSurface(20.dp, recessed = true, color = C.Board, depth = 2.dp).padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text("↻", color = C.Accent, fontSize = 36.sp, modifier = Modifier.padding(end = 16.dp))
