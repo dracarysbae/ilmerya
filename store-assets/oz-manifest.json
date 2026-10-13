@@ -8,28 +8,34 @@
       "bytes": 3679919
     },
     {
-      "file": "store-assets/appstore/tr/02-tutorial-1320x2868.png",
-      "scene": "tutorial",
+      "file": "store-assets/appstore/tr/02-cheer-1320x2868.png",
+      "scene": "cheer",
       "layout": "plain",
-      "bytes": 1879529
+      "bytes": 3141938
     },
     {
       "file": "store-assets/appstore/tr/03-menu-1320x2868.png",
       "scene": "menu",
       "layout": "plain",
-      "bytes": 2215257
+      "bytes": 2358321
     },
     {
-      "file": "store-assets/appstore/tr/04-result-1320x2868.png",
+      "file": "store-assets/appstore/tr/04-tutorial-1320x2868.png",
+      "scene": "tutorial",
+      "layout": "plain",
+      "bytes": 1877050
+    },
+    {
+      "file": "store-assets/appstore/tr/05-result-1320x2868.png",
       "scene": "result",
-      "layout": "celebrate",
-      "bytes": 2404931
+      "layout": "plain",
+      "bytes": 2090705
     },
     {
-      "file": "store-assets/appstore/tr/05-settings-1320x2868.png",
+      "file": "store-assets/appstore/tr/06-settings-1320x2868.png",
       "scene": "settings",
       "layout": "plain",
-      "bytes": 1792398
+      "bytes": 1789373
     },
     {
       "file": "store-assets/appstore/en/01-board-1320x2868.png",
@@ -38,88 +44,106 @@
       "bytes": 3679091
     },
     {
-      "file": "store-assets/appstore/en/02-tutorial-1320x2868.png",
-      "scene": "tutorial",
+      "file": "store-assets/appstore/en/02-cheer-1320x2868.png",
+      "scene": "cheer",
       "layout": "plain",
-      "bytes": 1893535
+      "bytes": 3142835
     },
     {
       "file": "store-assets/appstore/en/03-menu-1320x2868.png",
       "scene": "menu",
       "layout": "plain",
-      "bytes": 2232044
+      "bytes": 2370165
     },
     {
-      "file": "store-assets/appstore/en/04-result-1320x2868.png",
+      "file": "store-assets/appstore/en/04-tutorial-1320x2868.png",
+      "scene": "tutorial",
+      "layout": "plain",
+      "bytes": 1888159
+    },
+    {
+      "file": "store-assets/appstore/en/05-result-1320x2868.png",
       "scene": "result",
-      "layout": "celebrate",
-      "bytes": 2423786
+      "layout": "plain",
+      "bytes": 2109563
     },
     {
-      "file": "store-assets/appstore/en/05-settings-1320x2868.png",
+      "file": "store-assets/appstore/en/06-settings-1320x2868.png",
       "scene": "settings",
       "layout": "plain",
-      "bytes": 1807509
+      "bytes": 1800517
     },
     {
       "file": "store-assets/play/screenshots-tr/01-board-1080x1920.png",
       "scene": "board",
       "layout": "hero",
-      "bytes": 2446845
+      "bytes": 2394348
     },
     {
-      "file": "store-assets/play/screenshots-tr/02-tutorial-1080x1920.png",
-      "scene": "tutorial",
+      "file": "store-assets/play/screenshots-tr/02-cheer-1080x1920.png",
+      "scene": "cheer",
       "layout": "plain",
-      "bytes": 1546142
+      "bytes": 2233153
     },
     {
       "file": "store-assets/play/screenshots-tr/03-menu-1080x1920.png",
       "scene": "menu",
       "layout": "plain",
-      "bytes": 1734311
+      "bytes": 1818988
     },
     {
-      "file": "store-assets/play/screenshots-tr/04-result-1080x1920.png",
+      "file": "store-assets/play/screenshots-tr/04-tutorial-1080x1920.png",
+      "scene": "tutorial",
+      "layout": "plain",
+      "bytes": 1543849
+    },
+    {
+      "file": "store-assets/play/screenshots-tr/05-result-1080x1920.png",
       "scene": "result",
-      "layout": "celebrate",
-      "bytes": 1839805
+      "layout": "plain",
+      "bytes": 1665203
     },
     {
-      "file": "store-assets/play/screenshots-tr/05-settings-1080x1920.png",
+      "file": "store-assets/play/screenshots-tr/06-settings-1080x1920.png",
       "scene": "settings",
       "layout": "plain",
-      "bytes": 1500352
+      "bytes": 1498415
     },
     {
       "file": "store-assets/play/screenshots-en/01-board-1080x1920.png",
       "scene": "board",
       "layout": "hero",
-      "bytes": 2444509
+      "bytes": 2392585
     },
     {
-      "file": "store-assets/play/screenshots-en/02-tutorial-1080x1920.png",
-      "scene": "tutorial",
+      "file": "store-assets/play/screenshots-en/02-cheer-1080x1920.png",
+      "scene": "cheer",
       "layout": "plain",
-      "bytes": 1559365
+      "bytes": 2233236
     },
     {
       "file": "store-assets/play/screenshots-en/03-menu-1080x1920.png",
       "scene": "menu",
       "layout": "plain",
-      "bytes": 1745138
+      "bytes": 1826681
     },
     {
-      "file": "store-assets/play/screenshots-en/04-result-1080x1920.png",
+      "file": "store-assets/play/screenshots-en/04-tutorial-1080x1920.png",
+      "scene": "tutorial",
+      "layout": "plain",
+      "bytes": 1554644
+    },
+    {
+      "file": "store-assets/play/screenshots-en/05-result-1080x1920.png",
       "scene": "result",
-      "layout": "celebrate",
-      "bytes": 1852084
+      "layout": "plain",
+      "bytes": 1677163
     },
     {
-      "file": "store-assets/play/screenshots-en/05-settings-1080x1920.png",
+      "file": "store-assets/play/screenshots-en/06-settings-1080x1920.png",
       "scene": "settings",
       "layout": "plain",
-      "bytes": 1509635
+      "bytes": 1504995
     }
   ],
   "feature": [
